@@ -234,6 +234,18 @@ export default class Game extends Component {
     });
   }
 
+  handleTeamConfirm(e) {
+    return (
+      <div className={css.gamePageContainer}>
+        <div className={css.gameContainer}>
+          {this.renderGame()}
+          <Terminal commandArray={this.state.commandArray} commandInput={this.state.commandInput} handleCommands={this.handleCommands} handleInputChange={this.handleInputChange} />
+        </div>
+        {this.renderSideBar()}
+      </div>
+    );
+  }
+
   renderGame() {
     const {
       pokemon, opponent, winner, name, attacking,
@@ -273,7 +285,7 @@ export default class Game extends Component {
 
   renderTeam() {
     return (
-      <Team>
+      <Team />
     );
   }
 
