@@ -236,11 +236,13 @@ export default class Game extends Component {
 
   handleConfirmTeam(e) {
     return (
-      <div className={css.gameContainer}>
-        {this.renderGame()}
-        <Terminal commandArray={this.state.commandArray} commandInput={this.state.commandInput} handleCommands={this.handleCommands} handleInputChange={this.handleInputChange} />
+      <div>
+        <div className={css.gameContainer}>
+          {this.renderGame()}
+          <Terminal commandArray={this.state.commandArray} commandInput={this.state.commandInput} handleCommands={this.handleCommands} handleInputChange={this.handleInputChange} />
+        </div>
+        {this.renderSideBar()}
       </div>
-      {this.renderSideBar()}
     );
   }
 
@@ -283,7 +285,10 @@ export default class Game extends Component {
 
   renderTeam() {
     return (
-      <Team handleConfirm={this.handleConfirmTeam} />
+      <Team
+        handleConfirm={this.handleConfirmTeam}
+        
+      />
     );
   }
 
@@ -292,6 +297,14 @@ export default class Game extends Component {
     // const { players, spectators, gameOver, pokemon } = this.state;
     return (
       <div className={css.gamePageContainer}>
+        {this.renderTeam()}
+      </div>
+    );
+  }
+}
+
+/*
+
         <div className={css.gameContainer}>
           {this.renderGame()}
           <Terminal
@@ -306,3 +319,4 @@ export default class Game extends Component {
     );
   }
 }
+*/
