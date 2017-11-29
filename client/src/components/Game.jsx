@@ -271,6 +271,12 @@ export default class Game extends Component {
     );
   }
 
+  renderTeam() {
+    return (
+      <Team>
+    );
+  }
+
 
   render() {
     // const { players, spectators, gameOver, pokemon } = this.state;
