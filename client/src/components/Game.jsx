@@ -37,7 +37,7 @@ export default class Game extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleChatInputSubmit = this.handleChatInputSubmit.bind(this);
     this.handleCommands = this.handleCommands.bind(this);
-    this.handleConfirmTeam = this.handleConfirmTeaml.bind(this);
+    this.handleConfirmTeam = this.handleConfirmTeam.bind(this);
   }
 
   componentDidMount() {
@@ -284,7 +284,7 @@ export default class Game extends Component {
 
   renderTeam() {
     return (
-      <Team />
+      <Team handleConfirm={this.handleConfirmTeam} />
     );
   }
 
