@@ -2,10 +2,10 @@
 
 ## Team
 
-  - James Terry
-  - Chris Messer
-  - David Kumarbai
-  - Thomas Parker
+  - Cliff
+  - Joe
+  - Hubert
+  - Tim
 
 ## Table of Contents
 
@@ -68,7 +68,7 @@ The `start-dev` npm script automatically generates a `bundle.js` file as you dev
 
 ### Roadmap
 
-View the project roadmap [here](https://docs.google.com/document/d/1cdVM25fZtM5FbvYwwBRCHvTYupI5Z7EcVNIZzA4A5s8/edit)
+View the project roadmap [here](https://docs.google.com/document/d/1VjMDneiqEXubmdtpGL74fSlfZmH888-IHe2fvQdXGrY/edit)
 
 
 ## Contributing
