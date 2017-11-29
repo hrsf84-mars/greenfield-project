@@ -37,6 +37,7 @@ export default class Game extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleChatInputSubmit = this.handleChatInputSubmit.bind(this);
     this.handleCommands = this.handleCommands.bind(this);
+    this.handleConfirmTeam = this.handleConfirmTeaml.bind(this);
   }
 
   componentDidMount() {
@@ -236,13 +237,11 @@ export default class Game extends Component {
 
   handleConfirmTeam(e) {
     return (
-      <div className={css.gamePageContainer}>
-        <div className={css.gameContainer}>
-          {this.renderGame()}
-          <Terminal commandArray={this.state.commandArray} commandInput={this.state.commandInput} handleCommands={this.handleCommands} handleInputChange={this.handleInputChange} />
-        </div>
-        {this.renderSideBar()}
+      <div className={css.gameContainer}>
+        {this.renderGame()}
+        <Terminal commandArray={this.state.commandArray} commandInput={this.state.commandInput} handleCommands={this.handleCommands} handleInputChange={this.handleInputChange} />
       </div>
+      {this.renderSideBar()}
     );
   }
 
