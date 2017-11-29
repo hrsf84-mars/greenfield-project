@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
-// import Home from './Home';
-// import Login from './Login';
 import Chat from './Chat';
 import Terminal from './Terminal';
 import GameView from './GameView';
 import GameOverView from './GameOverView';
 import GameState from './GameState';
 import Logo from './Logo';
+import Team from './Team';
 import css from '../styles.css';
 
 import help from './../../../utils/helpers';
