@@ -234,7 +234,7 @@ export default class Game extends Component {
     });
   }
 
-  handleTeamConfirm(e) {
+  handleConfirmTeam(e) {
     return (
       <div className={css.gamePageContainer}>
         <div className={css.gameContainer}>
