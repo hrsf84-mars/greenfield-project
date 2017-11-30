@@ -14,6 +14,7 @@ const passport = require('passport');
 // const axios = require('axios');
 const { createPokemon, createTurnlog, createPlayer } = require('./helpers/creators.js');
 const { damageCalculation } = require('../game-logic.js');
+const { resolveTurn } = require('./helpers/combat');
 
 const saltRounds = 10;
 const dist = path.join(__dirname, '/../client/dist');
@@ -63,7 +64,9 @@ The sample shape of a game is:
   {
     player1: object,
     player2: object,
-    playerTurn: string ('player1' or 'player2')
+    // playerTurn: string ('player1' or 'player2'),
+    p1Move: string,
+    p2Move: string,
   }
 
 Refer to './helpers/creators.js' for more detail
@@ -100,7 +103,10 @@ io.on('connection', (socket) => {
           games.set(data.gameid, {
             player1,
             player2: null,
-            playerTurn: 'player1',
+            // playerTurn: 'player1',
+            moveChosenCount: 0,
+            p1Move: '',
+            p2Move: '',
           });
           io.to(socket.id).emit('player', player1);
         });
@@ -130,43 +136,48 @@ io.on('connection', (socket) => {
 
   socket.on('attack', (data) => {
     const game = games.get(data.gameid);
-    const player = game.playerTurn;
-    const opponent = game.playerTurn === 'player1' ? 'player2' : 'player1';
-    const turnResults = damageCalculation(game[player], game[opponent]);
-    game[opponent].pokemon[0].health -= turnResults.damageToBeDone;
-    const turnlog = createTurnlog(game, turnResults, 'attack');
-    io.to(data.gameid).emit('attack processed', {
-      basicAttackDialog: turnlog,
-    });
-    if (
-      game[opponent].pokemon[0].health <= 0 &&
-      game[opponent].pokemon[1].health <= 0 &&
-      game[opponent].pokemon[2].health <= 0
-    ) {
-      game[opponent].pokemon[0].health = 0;
-      io.to(data.gameid).emit('turn move', game);
-      io.to(data.gameid).emit('gameover', { name: game[player].name });
-    } else if (game[opponent].pokemon[0].health <= 0) {
-      game[opponent].pokemon[0].health = 0;
-      game.playerTurn = opponent;
-      io.to(data.gameid).emit('turn move', game);
+    // IMPL: if game doesn't exist, error
+
+    if (data.name === game.player1.name) {
+      game.p1Move = 'attack';
     } else {
-      game.playerTurn = opponent;
-      io.to(data.gameid).emit('turn move', game);
+      game.p2Move = 'attack';
+    }
+
+    if (game.p1Move && game.p2Move) {
+      resolveTurn(game, game.p1Move, game.p2Move, io, data.gameid);
+      game.p1Move = '';
+      game.p2Move = '';
     }
   });
 
   socket.on('switch', (data) => {
     const game = games.get(data.gameid);
-    const player = game.playerTurn;
-    const opponent = game.playerTurn === 'player1' ? 'player2' : 'player1';
-    game[player].pokemon.unshift(game[player].pokemon.splice(data.index, 1)[0]);
-    const turnlog = createTurnlog(game, null, 'switch');
-    game.playerTurn = opponent;
-    io.to(data.gameid).emit('attack processed', {
-      basicAttackDialog: turnlog,
-    });
-    io.to(data.gameid).emit('turn move', game);
+    // const player = game.playerTurn;
+    // const opponent = game.playerTurn === 'player1' ? 'player2' : 'player1';
+    // game[player].pokemon.unshift(game[player].pokemon.splice(data.index, 1)[0]);
+    // const turnlog = createTurnlog(game, null, 'switch');
+    // game.playerTurn = opponent;
+    // io.to(data.gameid).emit('attack processed', {
+    //   basicAttackDialog: turnlog,
+    // });
+    // io.to(data.gameid).emit('turn move', game);
+
+    if (data.name === game.player1.name) {
+      console.log('p1move set to switch');
+      game.player1.pokemon.unshift(game.player1.pokemon.splice(data.index, 1)[0]);
+      game.p1Move = 'switch';
+    } else {
+      console.log('p2move set to switch');
+      game.player2.pokemon.unshift(game.player2.pokemon.splice(data.index, 1)[0]);
+      game.p2Move = 'switch';
+    }
+
+    if (game.p1Move && game.p2Move) {
+      resolveTurn(game, game.p1Move, game.p2Move, io, data.gameid);
+      game.p1Move = '';
+      game.p2Move = '';
+    }
   });
 });
 
@@ -197,27 +208,6 @@ app.post('/login', async (req, resp) => {
   }
   resp.writeHead(201, { 'Content-Type': 'text/plain' });
   return resp.end('Passwords Do Not Match');
-
-  // db.Users
-  //   .findOne({ where: { username } })
-  //   .then((user) => {
-  //     if (user) {
-  //       const hash = user.dataValues.password;
-  //       return bcrypt.compare(password, hash);
-  //     }
-  //     resp.writeHead(201, { 'Content-Type': 'text/plain' });
-  //     resp.end('Username Not Found');
-  //   })
-  //   .then((passwordsMatch) => {
-  //     if (!passwordsMatch) {
-  //       resp.writeHead(201, {'Content-Type': 'text/plain'});
-  //       resp.end('Passwords Do Not Match');
-  //     } else {
-  //       req.session.username = username;
-  //       req.session.loggedIn = true;
-  //       resp.redirect('/welcome');
-  //     }
-  //   });
 });
 
 app.post('/signup', (req, resp) => {

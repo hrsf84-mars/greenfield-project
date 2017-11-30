@@ -107,21 +107,29 @@ export default class Game extends Component {
       },
       turnMove: (data) => {
         if (this.state.player1) {
-          this.setState(prevState => (
-            {
-              pokemon: data.player1.pokemon,
-              opponent: data.player2,
-              isActive: !prevState.isActive,
-            }
-          ));
+          // this.setState(prevState => (
+          //   {
+          //     pokemon: data.player1.pokemon,
+          //     opponent: data.player2,
+          //     isActive: !prevState.isActive,
+          //   }
+          // ));
+          this.setState({
+            pokemon: data.player1.pokemon,
+            opponent: data.player2,
+          });
         } else {
-          this.setState(prevState => (
-            {
-              pokemon: data.player2.pokemon,
-              opponent: data.player1,
-              isActive: !prevState.isActive,
-            }
-          ));
+          // this.setState(prevState => (
+          //   {
+          //     pokemon: data.player2.pokemon,
+          //     opponent: data.player1,
+          //     isActive: !prevState.isActive,
+          //   }
+          // ));
+          this.setState({
+            pokemon: data.player2.pokemon,
+            opponent: data.player1,
+          });
         }
       },
       gameOver: (data) => {
@@ -192,6 +200,7 @@ export default class Game extends Component {
         if (isAvailable && health > 0) {
           this.state.socket.emit('switch', {
             gameid: this.props.match.params.gameid,
+            name: this.state.name,
             pokemon: this.state.pokemon,
             index,
           });
@@ -213,7 +222,7 @@ export default class Game extends Component {
       return;
     }
 
-    if (!this.state.isActive) {
+    if (false && !this.state.isActive) {
       alert('it is not your turn!');
     } else if (value === 'attack') {
       if (this.state.pokemon[0].health <= 0) {

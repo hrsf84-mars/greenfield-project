@@ -46,21 +46,22 @@ const createPlayer = (player, number) => {
   });
 };
 
-const createTurnlog = (game, turn, type) => {
-  const player = game.playerTurn;
-  const opponent = game.playerTurn === 'player1' ? 'player2' : 'player1';
+// const createTurnlog = (game, turn, type) => {
+const createTurnlog = (player, opponent, turn, type) => {
+  const playerPokemonName = player.pokemon[0].name;
   if (type === 'attack') {
-    const turnlog = [{ command: `${game[player].pokemon[0].name} attacked!` }];
+    const opponentPokemonName = opponent.pokemon[0].name;
+    const turnlog = [{ command: `${playerPokemonName} attacked!` }];
     if (turn.logStatement !== '') {
       turnlog.push({ command: turn.logStatement });
     }
-    turnlog.push({ command: `${game[opponent].pokemon[0].name} lost ${turn.damageToBeDone} HP` });
-    if (game[opponent].pokemon[0].health <= 0) {
-      turnlog.push({ command: `${game[opponent].pokemon[0].name} has fainted!` });
+    turnlog.push({ command: `${opponentPokemonName} lost ${turn.damageToBeDone} HP` });
+    if (opponent.pokemon[0].health <= 0) {
+      turnlog.push({ command: `${opponentPokemonName} has fainted!` });
     }
     return turnlog;
   } else if (type === 'switch') {
-    const turnlog = [{ command: `${game[player].pokemon[0].name} appears!` }];
+    const turnlog = [{ command: `${playerPokemonName} appears!` }];
     return turnlog;
   }
   return [];
