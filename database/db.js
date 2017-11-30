@@ -1,7 +1,8 @@
 const Sequelize = require('sequelize');
 
 const rgx = new RegExp(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
-const match = process.env.DATABASE_URL ? process.env.DATABASE_URL.match(rgx) : 'postgres://wairrcwaikkuob:b6f7a04b36dc888549bcedd0c99f7cec9c18eb3e83bda91f24bd31fbe60eba50@ec2-50-16-199-246.compute-1.amazonaws.com:5432/d10sjl0jdmpqhu'.match(rgx);
+// const match = process.env.DATABASE_URL ? process.env.DATABASE_URL.match(rgx) : 'postgres://wairrcwaikkuob:b6f7a04b36dc888549bcedd0c99f7cec9c18eb3e83bda91f24bd31fbe60eba50@ec2-50-16-199-246.compute-1.amazonaws.com:5432/d10sjl0jdmpqhu'.match(rgx);
+const match = process.env.DATABASE_URL ? process.env.DATABASE_URL.match(rgx) : 'postgres://qckxiudygtiykp:abe2c83f2a4c04e713a500cb49f37b576b15ff49f46516b32f87a92aa4c93070@ec2-50-17-235-5.compute-1.amazonaws.com:5432/dbrsl1psur72na'.match(rgx);
 
 const sequelize = new Sequelize(match[5], match[1], match[2], {
   dialect: 'postgres',

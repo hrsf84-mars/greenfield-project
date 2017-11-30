@@ -51,7 +51,7 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
   if (fast.move === 'attack') {
     processAttacks(game, fast.player, slow.player, io, gameid);
   }
-  if (slow.move === 'attack') {
+  if (slow.move === 'attack' && slow.player.pokemon[0].health > 0) {
     processAttacks(game, slow.player, fast.player, io, gameid);
   }
 
