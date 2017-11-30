@@ -35,6 +35,7 @@ export default class Game extends Component {
       freeSwitch: false,
       activeChoice: null,
       pokemonOptions: [],
+      teamCount: 0,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
