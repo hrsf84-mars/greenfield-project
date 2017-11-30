@@ -280,6 +280,7 @@ export default class Game extends Component {
     return (
       <Team
         handleConfirm={this.handleConfirmTeam}
+        pokemon={this.state.pokemon}
       />
     );
   }
