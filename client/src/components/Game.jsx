@@ -31,6 +31,7 @@ export default class Game extends Component {
       commandInput: '',
       commandArray: [{ command: 'The game will begin shortly - type "help" to learn how to play' }],
       socket: null,
+      teamConfirmed: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -195,7 +196,7 @@ export default class Game extends Component {
             index,
           });
         } else if (health === 0) {
-          alert('That pokemon has fainted!')
+          alert('That pokemon has fainted!');
         } else {
           alert('You do not have that pokemon!');
         }
@@ -234,16 +235,8 @@ export default class Game extends Component {
     });
   }
 
-  handleConfirmTeam(e) {
-    return (
-      <div>
-        <div className={css.gameContainer}>
-          {this.renderGame()}
-          <Terminal commandArray={this.state.commandArray} commandInput={this.state.commandInput} handleCommands={this.handleCommands} handleInputChange={this.handleInputChange} />
-        </div>
-        {this.renderSideBar()}
-      </div>
-    );
+  handleConfirmTeam() {
+    this.setState({ teamConfirmed: true });
   }
 
   renderGame() {
@@ -287,17 +280,32 @@ export default class Game extends Component {
     return (
       <Team
         handleConfirm={this.handleConfirmTeam}
-        
       />
     );
   }
 
+  renderBattle() {
+    return (
+      <div className={css.gamePageContainer}>
+        <div className={css.gameContainer}>
+          {this.renderGame()}
+          <Terminal
+            commandArray={this.state.commandArray}
+            commandInput={this.state.commandInput}
+            handleCommands={this.handleCommands}
+            handleInputChange={this.handleInputChange}
+          />
+        </div>
+        {this.renderSideBar()}
+      </div>
+    );
+  }
 
   render() {
     // const { players, spectators, gameOver, pokemon } = this.state;
     return (
-      <div className={css.gamePageContainer}>
-        {this.renderTeam()}
+      <div>
+        {!this.state.teamConfirmed ? this.renderTeam() : this.renderBattle()}
       </div>
     );
   }
