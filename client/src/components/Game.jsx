@@ -90,7 +90,7 @@ export default class Game extends Component {
       playerInitialized: (data) => {
         this.setState({
           [data.player]: true,
-          pokemon: data.pokemon,
+          pokemonOptions: data.pokemon,
         });
       },
       handleReady: (data) => {
@@ -366,6 +366,7 @@ export default class Game extends Component {
     return (
       <Team
         handleConfirm={this.handleConfirmTeam}
+        pokemonOptions={this.state.pokemonOptions}
         pokemon={this.state.pokemon}
         handleSetActive={this.handleSetActive}
         choice={this.state.activeChoice}
@@ -394,7 +395,6 @@ export default class Game extends Component {
   }
 
   render() {
-    // const { players, spectators, gameOver, pokemon } = this.state;
     return (
       <div>
         {!this.state.teamConfirmed ? this.renderTeam() : this.renderBattle()}

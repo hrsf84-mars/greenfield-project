@@ -8,9 +8,16 @@ const Team = (props) => {
   return (
     <div>
       <h1>Create a Team</h1>
-      <PokemonOptions options={props.pokemon} handleSetActive={props.handleSetActive} />
+      <PokemonOptions
+        options={props.pokemonOptions}
+        handleSetActive={props.handleSetActive}
+      />
       <TeamList pokemon={props.pokemon} />
-      <ActiveChoice choice={props.choice} renderActive={props.renderActive} renderEmpty={props.renderEmpty} />
+      <ActiveChoice
+        choice={props.choice}
+        renderActive={props.renderActive}
+        renderEmpty={props.renderEmpty}
+      />
       <button onClick={props.handleConfirm}>
         Confirm
       </button>
