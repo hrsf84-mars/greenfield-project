@@ -6,8 +6,8 @@ import PokemonOptions from './PokemonOptions';
 const Team = (props) => {
   return (
     <div>
-      <h1>Your Team</h1>
-      <PokemonOptions options={props.pokemon}/>
+      <h1>Create a Team</h1>
+      <PokemonOptions options={props.pokemon} handleSetActive={props.handleSetActive} />
       <TeamList pokemon={props.pokemon} />
       <button onClick={props.handleConfirm}>
         Confirm

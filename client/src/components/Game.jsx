@@ -42,6 +42,7 @@ export default class Game extends Component {
     this.handleCommands = this.handleCommands.bind(this);
     this.handleConfirmTeam = this.handleConfirmTeam.bind(this);
     this.handleAttackClick = this.handleAttackClick.bind(this);
+    this.handleSetActive = this.handleSetActive.bind(this);
   }
 
   componentDidMount() {
@@ -272,6 +273,10 @@ export default class Game extends Component {
     });
   }
 
+  handleSetActive(pokemon) {
+    this.setState({ activeChoice: pokemon });
+  }
+
   handleConfirmTeam() {
     this.setState({ teamConfirmed: true });
   }
@@ -307,6 +312,7 @@ export default class Game extends Component {
     return <GameView opponent={opponent} pokemon={pokemon} attacking={attacking} />;
   }
 
+
   renderSideBar() {
     return (
       <div className={css.stateContainer}>
@@ -331,6 +337,7 @@ export default class Game extends Component {
       <Team
         handleConfirm={this.handleConfirmTeam}
         pokemon={this.state.pokemon}
+        handleSetActive={this.handleSetActive}
       />
     );
   }
@@ -362,21 +369,3 @@ export default class Game extends Component {
     );
   }
 }
-
-/*
-
-        <div className={css.gameContainer}>
-          {this.renderGame()}
-          <Terminal
-            commandArray={this.state.commandArray}
-            commandInput={this.state.commandInput}
-            handleCommands={this.handleCommands}
-            handleInputChange={this.handleInputChange}
-          />
-        </div>
-        {this.renderSideBar()}
-      </div>
-    );
-  }
-}
-*/
