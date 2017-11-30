@@ -43,6 +43,7 @@ export default class Game extends Component {
     this.handleConfirmTeam = this.handleConfirmTeam.bind(this);
     this.handleAttackClick = this.handleAttackClick.bind(this);
     this.handleSetActive = this.handleSetActive.bind(this);
+    this.renderActive = this.renderActive.bind(this);
   }
 
   componentDidMount() {
@@ -332,12 +333,44 @@ export default class Game extends Component {
     );
   }
 
+  renderActive() {
+    return (
+      <div id="activePokemon">
+        <h3>{this.state.activeChoice.name}</h3>
+        <div id="activePic">
+          <img src={this.state.activeChoice.sprites.front_default} alt="" />
+        </div>
+        <div id="activeInfo">
+          <h5 style={{ marginBottom: '0px', marginTop: '2px' }}>{`${this.state.activeChoice.name}'s Stats:`}</h5>
+          <h6 style={{ marginBottom: '0px' }}>{`Health: ${this.state.activeChoice.health} / {this.state.activeChoice.initialHealth}`}</h6>
+          <h6 style={{ marginBottom: '0px' }}>{`Attack: ${this.state.activeChoice.attack}`}</h6>
+          <h6 style={{ marginBottom: '0px' }}>{`Defense: ${this.state.activeChoice.defense}`}</h6>
+        </div>
+      </div>
+    );
+  }
+
+  renderEmpty() {
+    return (
+      <div id="activePokemon">
+        <h3>Choose a Pokemon</h3>
+        <div id="activePic">
+        Choose a pokemon
+        </div>
+        <div id="activeInfo" />
+      </div>
+    );
+  }
+
   renderTeam() {
     return (
       <Team
         handleConfirm={this.handleConfirmTeam}
         pokemon={this.state.pokemon}
         handleSetActive={this.handleSetActive}
+        choice={this.state.activeChoice}
+        renderActive={this.renderActive}
+        renderEmpty={this.renderEmpty}
       />
     );
   }
