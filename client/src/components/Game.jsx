@@ -33,6 +33,7 @@ export default class Game extends Component {
       socket: null,
       teamConfirmed: false,
       freeSwitch: false,
+      activeChoice: null,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
