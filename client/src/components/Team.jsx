@@ -11,6 +11,7 @@ const Team = (props) => {
       <PokemonOptions
         options={props.pokemonOptions}
         handleSetActive={props.handleSetActive}
+        handleAddPokemon={props.handleAddPokemon}
       />
       <TeamList pokemon={props.pokemon} />
       <ActiveChoice

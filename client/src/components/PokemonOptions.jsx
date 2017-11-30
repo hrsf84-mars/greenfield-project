@@ -14,7 +14,7 @@ const PokemonOptions = (props) => {
           </div>
         );
       })}
-      <button>Choose Pokemon</button>
+      <button onClick={props.handleAddPokemon}>Choose Pokemon</button>
     </div>
   );
 };

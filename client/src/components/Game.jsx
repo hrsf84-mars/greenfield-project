@@ -45,6 +45,7 @@ export default class Game extends Component {
     this.handleAttackClick = this.handleAttackClick.bind(this);
     this.handleSetActive = this.handleSetActive.bind(this);
     this.renderActive = this.renderActive.bind(this);
+    this.handleAddPokemon = this.handleAddPokemon.bind(this);
   }
 
   componentDidMount() {
@@ -296,6 +297,21 @@ export default class Game extends Component {
     }
   }
 
+  handleAddPokemon() {
+    let teamArr = this.state.pokemon;
+    teamArr.push(this.state.activeChoice);
+    let newCount = this.state.teamCount + 1;
+    if (this.state.teamCount <= 3) {
+      this.setState({
+        pokemon: teamArr,
+        teamCount: newCount,
+        activeChoice: null,
+      });
+    } else {
+      console.log('Too many pokemon');
+    }
+  }
+
   renderGame() {
     const {
       pokemon, opponent, winner, name, attacking,
@@ -373,6 +389,7 @@ export default class Game extends Component {
         choice={this.state.activeChoice}
         renderActive={this.renderActive}
         renderEmpty={this.renderEmpty}
+        handleAddPokemon={this.handleAddPokemon}
       />
     );
   }
