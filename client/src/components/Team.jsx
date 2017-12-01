@@ -6,21 +6,29 @@ import ActiveChoice from './ActiveChoice';
 
 const Team = (props) => {
   return (
-    <div>
+    <div className={css.teamContainer}>
       <h1>Create a Team</h1>
-      <PokemonOptions
-        options={props.pokemonOptions}
-        handleSetActive={props.handleSetActive}
-        handleAddPokemon={props.handleAddPokemon}
-      />
-      <TeamList pokemon={props.pokemon} />
-      <ActiveChoice
-        choice={props.choice}
-        renderActive={props.renderActive}
-        renderEmpty={props.renderEmpty}
-      />
-      <button onClick={props.handleConfirm}>
-        Confirm
+      <div>
+        <div className={css.teamCol}>
+          <PokemonOptions
+            options={props.pokemonOptions}
+            handleSetActive={props.handleSetActive}
+            handleAddPokemon={props.handleAddPokemon}
+          />
+          <TeamList pokemon={props.pokemon} />
+        </div>
+        <div className={css.teamCol}>
+          <ActiveChoice
+            choice={props.choice}
+            renderActive={props.renderActive}
+            renderEmpty={props.renderEmpty}
+          />
+        </div>
+      </div>
+      <br />
+      <br />
+      <button style={{ display: 'block' }} onClick={props.handleConfirm} className={css.gameButton}>
+        Confirm Team
       </button>
     </div>
   );

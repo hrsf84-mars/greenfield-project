@@ -352,14 +352,14 @@ export default class Game extends Component {
 
   renderActive() {
     return (
-      <div id="activePokemon">
+      <div id="activePokemon" className={css.activeChoice}>
         <h3>{this.state.activeChoice.name}</h3>
         <div id="activePic">
           <img src={this.state.activeChoice.sprites.front_default} alt="" />
         </div>
         <div id="activeInfo">
           <h5 style={{ marginBottom: '0px', marginTop: '2px' }}>{`${this.state.activeChoice.name}'s Stats:`}</h5>
-          <h6 style={{ marginBottom: '0px' }}>{`Health: ${this.state.activeChoice.health} / {this.state.activeChoice.initialHealth}`}</h6>
+          <h6 style={{ marginBottom: '0px' }}>{`Health: ${this.state.activeChoice.health} / ${this.state.activeChoice.initialHealth}`}</h6>
           <h6 style={{ marginBottom: '0px' }}>{`Attack: ${this.state.activeChoice.attack}`}</h6>
           <h6 style={{ marginBottom: '0px' }}>{`Defense: ${this.state.activeChoice.defense}`}</h6>
         </div>
@@ -369,11 +369,9 @@ export default class Game extends Component {
 
   renderEmpty() {
     return (
-      <div id="activePokemon">
+      <div id="activePokemon" className={css.activeChoice}>
         <h3>Choose a Pokemon</h3>
-        <div id="activePic">
-        Choose a pokemon
-        </div>
+        <div id="activePic" />
         <div id="activeInfo" />
       </div>
     );
