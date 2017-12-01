@@ -34,16 +34,12 @@ export default class Login extends Component {
   }
 
   handleUsernameChange(e) {
-    console.log('Username changed to', e.target.value);
-
     this.setState({
       username: e.target.value
     });
   }
 
   handlePasswordChange(e) {
-    console.log('Password changed to', e.target.value);
-
     this.setState({
       password: e.target.value
     });
@@ -61,19 +57,16 @@ export default class Login extends Component {
       })
       .then(resp => {
         if (resp.data.match('Username Not Found')) {
-          console.log('Username Not Found');
           this.setState({
             usernameError: true
           });
         }
         else if (resp.data.match('Passwords Do Not Match')) {
-          console.log('Passwords Do Not Match');
           this.setState({
             passwordError: true
           });
         }
         else {
-          console.log("user found");
           this.setState({
             registered: true
           });
