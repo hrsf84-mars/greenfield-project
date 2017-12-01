@@ -207,21 +207,22 @@ const modifierCalculation = (attackerTypes, moveType, opponentTypes) => {
 };
 
 // reference: https://bulbapedia.bulbagarden.net/wiki/Damage
-const damageCalculation = (activePlayer, opponent) => {
+const damageCalculation = (activePlayer, opponent, move) => {
   const attackerTypes = activePlayer.pokemon[0].types;
-  const moveType = attackerTypes[0];
+  // const moveType = attackerTypes[0];
+  const moveType = move.type;
   const opponentTypes = opponent.pokemon[0].types;
   const modifier = modifierCalculation(attackerTypes, moveType, opponentTypes);
   const userAtk = activePlayer.pokemon[0].attack;
   const userSpAtk = activePlayer.pokemon[0].specialAttack;
-  const isPhysical = userAtk > userSpAtk;
+  const isPhysical = move.category === 'physical';
   const atk = isPhysical ? userAtk : userSpAtk;
   const opponentDef = opponent.pokemon[0].defense;
   const opponentSpDef = activePlayer.pokemon[0].specialDefense;
   const def = isPhysical ? opponentDef : opponentSpDef;
   return {
-    damageToBeDone: Math.round((((12 * 60 * (atk / def)) / 50) + 2) *
-                    modifier.modifierDamage),
+    damageToBeDone: Math.round((((((2 * POKEMON_LEVEL * 0.2) + 2) * move.power * (atk / def))
+      / 50) + 2) * modifier.modifierDamage),
     logStatement: modifier.logStatement,
   };
 };

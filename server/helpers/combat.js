@@ -8,8 +8,18 @@ const processSwitches = (game, player, io, gameid) => {
   });
 };
 
-const processAttacks = (game, attacker, defender, io, gameid) => {
-  const turnResults = damageCalculation(attacker, defender);
+const processAttacks = (game, attacker, defender, moveIdx, io, gameid) => {
+  const attackingPokemon = attacker.pokemon[0];
+  const attackingMove = moveIdx >= 0 ? attackingPokemon.moves[moveIdx] : {
+    name: 'attack',
+    power: 30,
+    accuracy: 80,
+    category: attacker.pokemon[0].attack > attacker.pokemon[0].specialAttack ? 'physical' : 'special',
+    type: attacker.pokemon[0].types[0],
+    isZ: false,
+  };
+  console.log(attackingMove);
+  const turnResults = damageCalculation(attacker, defender, attackingMove);
   const targetPokemon = defender.pokemon[0];
   targetPokemon.health -= turnResults.damageToBeDone;
 
@@ -19,7 +29,7 @@ const processAttacks = (game, attacker, defender, io, gameid) => {
   });
 };
 
-exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
+exports.resolveTurn = (game, p1Move, p1MoveIdx, p2Move, p2MoveIdx, io, gameid) => {
   console.log('resolving turn');
   const p1 = game.player1;
   const p2 = game.player2;
@@ -31,11 +41,13 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
     // player: p1,
     player: isP1Faster ? p1 : p2,
     move: isP1Faster ? p1Move : p2Move,
+    moveIdx: isP1Faster ? p1MoveIdx : p2MoveIdx,
   };
   const slow = {
     // player: p2,
     player: isP1Faster ? p2 : p1,
     move: isP1Faster ? p2Move : p1Move,
+    moveIdx: isP1Faster ? p2MoveIdx : p1MoveIdx,
   };
 
   // handle switches
@@ -48,10 +60,10 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
 
   // handle attacks
   if (fast.move === 'attack') {
-    processAttacks(game, fast.player, slow.player, io, gameid);
+    processAttacks(game, fast.player, slow.player, fast.moveIdx, io, gameid);
   }
   if (slow.move === 'attack' && slow.player.pokemon[0].health > 0) {
-    processAttacks(game, slow.player, fast.player, io, gameid);
+    processAttacks(game, slow.player, fast.player, slow.moveIdx, io, gameid);
   }
 
   // handle KO

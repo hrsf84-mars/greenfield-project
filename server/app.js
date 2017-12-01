@@ -67,6 +67,8 @@ The sample shape of a game is:
     // playerTurn: string ('player1' or 'player2'),
     p1Move: string,
     p2Move: string,
+    p1MoveIdx: number,
+    p2MoveIdx: number,
   }
 
 Refer to './helpers/creators.js' for more detail
@@ -140,12 +142,14 @@ io.on('connection', (socket) => {
 
     if (data.name === game.player1.name) {
       game.p1Move = 'attack';
+      game.p1MoveIdx = data.moveIdx;
     } else {
       game.p2Move = 'attack';
+      game.p2MoveIdx = data.moveIdx;
     }
 
     if (game.p1Move && game.p2Move) {
-      resolveTurn(game, game.p1Move, game.p2Move, io, data.gameid);
+      resolveTurn(game, game.p1Move, game.p1MoveIdx, game.p2Move, game.p2MoveIdx, io, data.gameid);
       game.p1Move = '';
       game.p2Move = '';
     }
@@ -174,7 +178,7 @@ io.on('connection', (socket) => {
       }
       // console.log('free switch', player);
       player.pokemon.unshift(player.pokemon.splice(data.index, 1)[0]);
-      resolveTurn(game, game.p1Move, game.p2Move, io, data.gameid);
+      resolveTurn(game, game.p1Move, game.p1MoveIdx, game.p2Move, game.p2MoveIdx, io, data.gameid);
       game.p1Move = '';
       game.p2Move = '';
       return;

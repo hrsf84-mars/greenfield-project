@@ -205,11 +205,12 @@ export default class Game extends Component {
           }
         ));
       },
-      attack: () => {
+      attack: (moveIdx) => {
         this.state.socket.emit('attack', {
           gameid: this.props.match.params.gameid,
           name: this.state.name,
           pokemon: this.state.pokemon,
+          moveIdx,
         });
         this.setState({
           attacking: false,
@@ -255,10 +256,19 @@ export default class Game extends Component {
       return;
     }
 
-    if (false && !this.state.isActive) {
-      this.setState({gameMessage: 'it is not your turn!'});
-      // alert('it is not your turn!');
-    } else if (value === 'attack') {
+    let moveIdx = -1;
+    const { moves } = this.state.pokemon[0];
+    for (let i = 0; i < moves.length; i += 1) {
+      if (moves[i].name === value) {
+        moveIdx = i;
+        break;
+      }
+    }
+    console.log(value, moveIdx);
+    // if (!this.state.isActive) {
+    //   alert('it is not your turn!');
+    // }
+    if (moveIdx >= 0 || value === 'attack') {
       // console.log(this.state.pokemon[0].health);
       if (this.state.pokemon[0].health <= 0) {
         this.setState({gameMessage: 'you must choose a new pokemon, this one has fainted!'});
@@ -270,7 +280,7 @@ export default class Game extends Component {
         this.setState({
           attacking: true,
         });
-        setTimeout(() => this.commandHandlers().attack(), 300);
+        setTimeout(() => this.commandHandlers().attack(moveIdx), 300);
       }
     } else if (value.split(' ')[0] === 'choose') {
       this.commandHandlers().choose(value.split(' ')[1]);

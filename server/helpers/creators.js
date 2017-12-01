@@ -17,11 +17,11 @@ const createMoveMap = () => {
   const moveMap = new Map();
   allMoves.filter(({ basePower, isZ }) => basePower > 0 && !isZ).forEach((moveInfo) => {
     moveMap.set(moveInfo.num, {
-      name: moveInfo.name,
+      name: moveInfo.name.toLowerCase(),
       power: moveInfo.basePower,
       accuracy: moveInfo.accuracy,
-      category: moveInfo.category,
-      type: moveInfo.type,
+      category: moveInfo.category.toLowerCase(),
+      type: moveInfo.type.toLowerCase(),
       isZ: moveInfo.isZ,
     });
   });
@@ -53,8 +53,16 @@ const createPokemon = (pokemon) => {
   } = pokemon;
   const scaledHealth = calculateBaseHealth(baseHealth);
   const moves = [];
-  for (let i = moveSet.length - 1; i >= moveSet.length - 4; i -= 1) {
-    moves.push(moveMap.get(Number(moveSet[i])));
+  let cnt = 0;
+  for (let i = 0; i < moveSet.length; i += 1) {
+    const move = moveMap.get(moveSet[i]);
+    if (move) {
+      moves.push(move);
+      cnt += 1;
+      if (cnt >= 4) {
+        break;
+      }
+    }
   }
 
   console.log(name, moves);
