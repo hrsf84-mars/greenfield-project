@@ -90,6 +90,7 @@ export default class Game extends Component {
         ));
       },
       playerInitialized: (data) => {
+        console.log(data);
         this.setState({
           [data.player]: true,
           pokemonOptions: data.pokemon,
@@ -361,7 +362,10 @@ export default class Game extends Component {
           <h5 style={{ marginBottom: '0px', marginTop: '2px' }}>{`${this.state.activeChoice.name}'s Stats:`}</h5>
           <h6 style={{ marginBottom: '0px' }}>{`Health: ${this.state.activeChoice.health} / ${this.state.activeChoice.initialHealth}`}</h6>
           <h6 style={{ marginBottom: '0px' }}>{`Attack: ${this.state.activeChoice.attack}`}</h6>
+          <h6 style={{ marginBottom: '0px' }}>{`Special Attack: ${this.state.activeChoice.specialAttack}`}</h6>
           <h6 style={{ marginBottom: '0px' }}>{`Defense: ${this.state.activeChoice.defense}`}</h6>
+          <h6 style={{ marginBottom: '0px' }}>{`Special Defense: ${this.state.activeChoice.specialDefense}`}</h6>
+          <h6 style={{ marginBottom: '0px' }}>{`Speed: ${this.state.activeChoice.speed}`}</h6>
         </div>
       </div>
     );
