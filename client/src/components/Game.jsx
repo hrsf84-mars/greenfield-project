@@ -289,7 +289,10 @@ export default class Game extends Component {
   }
 
   handleConfirmTeam() {
-    this.setState({ teamConfirmed: true });
+    // check if there are three pokemon added to the team
+      // if so, set state
+      this.setState({ teamConfirmed: true });
+    // if not, do nothing
   }
 
   handleAttackClick() {
@@ -308,17 +311,19 @@ export default class Game extends Component {
   }
 
   handleAddPokemon() {
-    let teamArr = this.state.pokemon;
-    teamArr.push(this.state.activeChoice);
-    let newCount = this.state.teamCount + 1;
-    if (this.state.teamCount <= 3) {
-      this.setState({
-        pokemon: teamArr,
-        teamCount: newCount,
-        activeChoice: null,
-      });
-    } else {
-      console.log('Too many pokemon');
+    if (this.state.activeChoice) {
+      if (this.state.teamCount < 3) {
+        let teamArr = this.state.pokemon;
+        teamArr.push(this.state.activeChoice);
+        let newCount = this.state.teamCount + 1;
+        this.setState({
+          pokemon: teamArr,
+          teamCount: newCount,
+          activeChoice: null,
+        });
+      } else {
+        console.log('Too many pokemon');
+      }
     }
   }
 
