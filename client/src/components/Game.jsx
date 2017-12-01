@@ -17,6 +17,7 @@ export default class Game extends Component {
     super(props);
 
     this.state = {
+      gameMessage: '',
       player1: false,
       player2: false,
       messageArray: [],
@@ -235,9 +236,11 @@ export default class Game extends Component {
           });
           // this.setState({ freeSwitch: false });
         } else if (health === 0) {
-          alert('That pokemon has fainted!');
+          this.setState({gameMessage: 'That pokemon has fainted!'});
+          // alert('That pokemon has fainted!');
         } else {
-          alert('You do not have that pokemon!');
+          this.setState({gameMessage: 'You do not have that pokemon!'});
+          // alert('You do not have that pokemon!');
         }
       },
     };
@@ -253,13 +256,16 @@ export default class Game extends Component {
     }
 
     if (false && !this.state.isActive) {
-      alert('it is not your turn!');
+      this.setState({gameMessage: 'it is not your turn!'});
+      // alert('it is not your turn!');
     } else if (value === 'attack') {
       // console.log(this.state.pokemon[0].health);
       if (this.state.pokemon[0].health <= 0) {
-        alert('you must choose a new pokemon, this one has fainted!');
+        this.setState({gameMessage: 'you must choose a new pokemon, this one has fainted!'});
+        // alert('you must choose a new pokemon, this one has fainted!');
       } else if (this.state.freeSwitch) {
-        alert('you must wait for your opponent to pick a new pokemon');
+        this.setState({gameMessage: 'you must wait for your opponent to pick a new pokemon'});
+        // alert('you must wait for your opponent to pick a new pokemon');
       } else {
         this.setState({
           attacking: true,
@@ -269,7 +275,8 @@ export default class Game extends Component {
     } else if (value.split(' ')[0] === 'choose') {
       this.commandHandlers().choose(value.split(' ')[1]);
     } else {
-      alert('invalid input!');
+      this.setState({gameMessage: 'invalid input!'});
+      // alert('invalid input!');
     }
 
     this.setState({
@@ -287,16 +294,17 @@ export default class Game extends Component {
 
   handleAttackClick() {
     if (this.state.pokemon[0].health <= 0) {
-      alert('you must choose a new pokemon, this one has fainted!');
+      this.setState({gameMessage: 'you must choose a new pokemon, this one has fainted!'});
+      // alert('you must choose a new pokemon, this one has fainted!');
     } else if (this.state.freeSwitch) {
-      alert('you must wait for your opponent to pick a new pokemon');
+      this.setState({gameMessage: 'you must wait for your opponent to pick a new pokemon'});
+      // alert('you must wait for your opponent to pick a new pokemon');
     } else {
       this.setState({
         attacking: true,
       });
       setTimeout(() => this.commandHandlers().attack(), 300);
     }
-    alert('handleAttackClick triggered');
   }
 
   handleAddPokemon() {
@@ -340,6 +348,7 @@ export default class Game extends Component {
           name={this.state.name}
           isActive={this.state.isActive}
           opponent={this.state.opponent}
+          message={this.state.gameMessage}
         />
         <GameState pokemon={this.state.pokemon} handleChoose={this.commandHandlers().choose} />
         <Chat
