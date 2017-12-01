@@ -8,7 +8,7 @@ const PokemonOptions = (props) => {
       <br />
       {props.options.map((pokemon) => {
         return (
-          <div style={{ display: 'inline-block' }} onClick={() => props.handleSetActive(pokemon)}>
+          <div style={{ display: 'inline-block', width: '150px' }} onClick={() => props.handleSetActive(pokemon)}>
             <img src={pokemon.sprites.front_default} alt="" />
             <h5 style={{ marginBottom: '0px', marginTop: '2px' }}>{pokemon.name}</h5>
             <h6 style={{ marginBottom: '0px' }}>{pokemon.health} / {pokemon.initialHealth}</h6>

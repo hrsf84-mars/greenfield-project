@@ -289,9 +289,7 @@ export default class Game extends Component {
   }
 
   handleConfirmTeam() {
-    // check if there are three pokemon added to the team
     this.state.teamCount === 3 ? this.setState({ teamConfirmed: true }) : null;
-    // if not, do nothing
   }
 
   handleAttackClick() {
