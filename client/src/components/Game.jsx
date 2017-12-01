@@ -278,7 +278,7 @@ export default class Game extends Component {
           isActive={this.state.isActive}
           opponent={this.state.opponent}
         />
-        <GameState pokemon={this.state.pokemon} />
+        <GameState pokemon={this.state.pokemon} handleChoose={this.commandHandlers().choose} />
         <Chat
           messageArray={this.state.messageArray}
           chatInput={this.state.chatInput}
