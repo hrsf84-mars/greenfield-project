@@ -248,6 +248,10 @@ export default class Game extends Component {
     this.setState({ teamConfirmed: true });
   }
 
+  handleAttackClick() {
+    alert('handleAttackClick triggered');
+  }
+
   renderGame() {
     const {
       pokemon, opponent, winner, name, attacking,
@@ -305,6 +309,7 @@ export default class Game extends Component {
             handleCommands={this.handleCommands}
             handleInputChange={this.handleInputChange}
           />
+          <button onClick={this.commandHandlers().attack}> attack </button>
         </div>
         {this.renderSideBar()}
       </div>
