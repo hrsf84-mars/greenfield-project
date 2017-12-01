@@ -212,10 +212,15 @@ const damageCalculation = (activePlayer, opponent) => {
   const moveType = attackerTypes[0];
   const opponentTypes = opponent.pokemon[0].types;
   const modifier = modifierCalculation(attackerTypes, moveType, opponentTypes);
-  const userAttackStat = activePlayer.pokemon[0].attack;
-  const opponentDefenseStat = opponent.pokemon[0].defense;
+  const userAtk = activePlayer.pokemon[0].attack;
+  const userSpAtk = activePlayer.pokemon[0].specialAttack;
+  const isPhysical = userAtk > userSpAtk;
+  const atk = isPhysical ? userAtk : userSpAtk;
+  const opponentDef = opponent.pokemon[0].defense;
+  const opponentSpDef = activePlayer.pokemon[0].specialDefense;
+  const def = isPhysical ? opponentDef : opponentSpDef;
   return {
-    damageToBeDone: Math.round((((12 * 60 * (userAttackStat / opponentDefenseStat)) / 50) + 2) *
+    damageToBeDone: Math.round((((12 * 60 * (atk / def)) / 50) + 2) *
                     modifier.modifierDamage),
     logStatement: modifier.logStatement,
   };

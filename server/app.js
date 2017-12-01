@@ -163,6 +163,15 @@ io.on('connection', (socket) => {
     // });
     // io.to(data.gameid).emit('turn move', game);
 
+    const isPlayer1 = data.name === game.player1.name;
+
+    if (data.free) {
+      const player = isPlayer1 ? game.player1 : game.player2;
+      player.pokemon.unshift(player.pokemon.splice(data.index, 1)[0]);
+      resolveTurn(game, game.p1Move, game.p2Move, io, data.gameid);
+      return;
+    }
+
     if (data.name === game.player1.name) {
       console.log('p1move set to switch');
       game.player1.pokemon.unshift(game.player1.pokemon.splice(data.index, 1)[0]);

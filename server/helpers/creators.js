@@ -12,11 +12,11 @@ which will be emitted from the socket connection within server/app.js
 */
 
 const createPokemon = (pokemon) => {
-  console.log(pokemon.types);
-  console.log(pokemon.name);
-  console.log(pokemon.frontSprite, pokemon.backSprite);
-  console.log(pokemon.baseSpecialAttack, pokemon.baseSpecialDefense, pokemon.baseSpeed);
-  console.log(pokemon.moveSet);
+  // console.log(pokemon.types);
+  // console.log(pokemon.name);
+  // console.log(pokemon.frontSprite, pokemon.backSprite);
+  // console.log(pokemon.baseSpecialAttack, pokemon.baseSpecialDefense, pokemon.baseSpeed);
+  // console.log(pokemon.moveSet);
   const {
     name,
     baseHealth,

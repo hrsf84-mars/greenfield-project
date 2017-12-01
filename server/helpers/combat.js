@@ -17,16 +17,16 @@ const processAttacks = (game, attacker, defender, io, gameid) => {
   io.to(gameid).emit('attack processed', {
     basicAttackDialog: turnlog,
   });
-  if (
-    defender.pokemon[0].health <= 0 &&
-    defender.pokemon[1].health <= 0 &&
-    defender.pokemon[2].health <= 0
-  ) {
-    targetPokemon.health = 0;
-    io.to(gameid).emit('gameover', { name: attacker.name });
-  } else if (targetPokemon.health <= 0) {
-    targetPokemon.health = 0;
-  }
+  // if (
+  //   defender.pokemon[0].health <= 0 &&
+  //   defender.pokemon[1].health <= 0 &&
+  //   defender.pokemon[2].health <= 0
+  // ) {
+  //   targetPokemon.health = 0;
+  //   io.to(gameid).emit('gameover', { name: attacker.name });
+  // } else if (targetPokemon.health <= 0) {
+  //   targetPokemon.health = 0;
+  // }
 };
 
 exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
@@ -48,6 +48,7 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
     move: isP1Faster ? p2Move : p1Move,
   };
 
+  // handle switches
   if (fast.move === 'switch') {
     processSwitches(game, fast.player, io, gameid);
   }
@@ -55,6 +56,7 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
     processSwitches(game, slow.player, io, gameid);
   }
 
+  // handle attacks
   if (fast.move === 'attack') {
     processAttacks(game, fast.player, slow.player, io, gameid);
   }
@@ -62,5 +64,22 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
     processAttacks(game, slow.player, fast.player, io, gameid);
   }
 
-  io.to(gameid).emit('turn move', game);
+  // handle KO
+  if (p1Pokemon.health <= 0) {
+    p1Pokemon.health = 0;
+    if (p1.pokemon[1].health <= 0 && p1.pokemon[2].health <= 0) {
+      io.to(gameid).emit('gameover', { name: p2.name });
+    } else {
+      io.to(gameid).emit('free switch', game);
+    }
+  } else if (p2Pokemon.health <= 0) {
+    p2Pokemon.health = 0;
+    if (p2.pokemon[1].health <= 0 && p2.pokemon[2].health <= 0) {
+      io.to(gameid).emit('gameover', { name: p1.name });
+    } else {
+      io.to(gameid).emit('free switch', game);
+    }
+  } else {
+    io.to(gameid).emit('turn move', game);
+  }
 };

@@ -61,6 +61,7 @@ export default class Game extends Component {
           socket.on('player', this.socketHandlers().playerInitialized);
           socket.on('ready', this.socketHandlers().handleReady);
           socket.on('attack processed', this.socketHandlers().attackProcess);
+          socket.on('free switch', this.socketHandlers().freeSwitch);
           socket.on('turn move', this.socketHandlers().turnMove);
           socket.on('gameover', this.socketHandlers().gameOver);
         } else {
@@ -104,6 +105,22 @@ export default class Game extends Component {
         this.setState(prevState => (
           { commandArray: prevState.commandArray.concat(data.basicAttackDialog) }
         ));
+      },
+      freeSwitch: (data) => {
+        console.log('free switch available');
+        if (this.state.player1) {
+          this.setState({
+            freeSwitch: true,
+            pokemon: data.player1.pokemon,
+            opponent: data.player2,
+          });
+        } else {
+          this.setState({
+            freeSwitch: true,
+            pokemon: data.player2.pokemon,
+            opponent: data.player1,
+          });
+        }
       },
       turnMove: (data) => {
         if (this.state.player1) {
@@ -203,7 +220,9 @@ export default class Game extends Component {
             name: this.state.name,
             pokemon: this.state.pokemon,
             index,
+            free: this.state.freeSwitch,
           });
+          this.setState({ freeSwitch: false });
         } else if (health === 0) {
           alert('That pokemon has fainted!');
         } else {
