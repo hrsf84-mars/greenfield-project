@@ -39,6 +39,7 @@ export default class Game extends Component {
     this.handleChatInputSubmit = this.handleChatInputSubmit.bind(this);
     this.handleCommands = this.handleCommands.bind(this);
     this.handleConfirmTeam = this.handleConfirmTeam.bind(this);
+    this.handleAttackClick = this.handleAttackClick.bind(this);
   }
 
   componentDidMount() {
@@ -273,9 +274,18 @@ export default class Game extends Component {
     this.setState({ teamConfirmed: true });
   }
 
-  // handleAttackClick() {
-  //   alert('handleAttackClick triggered');
-  // }
+  handleAttackClick() {
+    if (this.state.pokemon[0].health <= 0) {
+      alert('you must choose a new pokemon, this one has fainted!');
+    } else if (this.state.freeSwitch) {
+      alert('you must wait for your opponent to pick a new pokemon');
+    } else {
+      this.setState({
+        attacking: true,
+      });
+      setTimeout(() => this.commandHandlers().attack(), 300);
+    }
+  }
 
   renderGame() {
     const {
@@ -334,7 +344,7 @@ export default class Game extends Component {
             handleCommands={this.handleCommands}
             handleInputChange={this.handleInputChange}
           />
-          <button onClick={this.commandHandlers().attack}> attack </button>
+          <button onClick={this.handleAttackClick}> attack </button>
         </div>
         {this.renderSideBar()}
       </div>
