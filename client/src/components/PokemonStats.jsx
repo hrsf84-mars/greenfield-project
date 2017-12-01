@@ -6,7 +6,7 @@ function PokemonStats(props) {
     <div className={css.stats}>
       <h2>{props.stats.name.toUpperCase()}</h2>
       <h4 style={{ marginBottom: '2px' }}> {props.stats.health} / {props.stats.initialHealth} </h4>
-      <h6 style={{ marginTop: '5px' }}> atk: {props.stats.attack} - def: {props.stats.defense} </h6>
+      <h6 style={{ marginTop: '5px' }}> atk: {props.stats.attack} - def: {props.stats.defense} - sp atk: {props.stats.specialAttack} - sp def: {props.stats.specialDefense} - spd: {props.stats.speed} </h6>
     </div>
   );
 }

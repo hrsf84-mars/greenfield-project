@@ -13,7 +13,7 @@ const session = require('express-session');
 const passport = require('passport');
 // const axios = require('axios');
 const { createPokemon, createTurnlog, createPlayer } = require('./helpers/creators.js');
-const { damageCalculation } = require('../game-logic.js');
+// const { damageCalculation } = require('../game-logic.js');
 const { resolveTurn } = require('./helpers/combat');
 
 const saltRounds = 10;

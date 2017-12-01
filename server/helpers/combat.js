@@ -33,14 +33,21 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
   console.log('resolving turn');
   const p1 = game.player1;
   const p2 = game.player2;
+  const p1Pokemon = p1.pokemon[0];
+  const p2Pokemon = p2.pokemon[0];
+  const isP1Faster = p1Pokemon.speed >= p2Pokemon.speed;
+  console.log(p1Pokemon, p2Pokemon, isP1Faster);
   const fast = {
-    player: p1,
-    move: p1Move,
+    // player: p1,
+    player: isP1Faster ? p1 : p2,
+    move: isP1Faster ? p1Move : p2Move,
   };
   const slow = {
-    player: p2,
-    move: p2Move,
+    // player: p2,
+    player: isP1Faster ? p2 : p1,
+    move: isP1Faster ? p2Move : p1Move,
   };
+
   if (fast.move === 'switch') {
     processSwitches(game, fast.player, io, gameid);
   }

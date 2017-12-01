@@ -1,4 +1,5 @@
 const db = require('../../database/db.js');
+const { calculateBaseHealth, calculateBaseStat } = require('../../game-logic');
 
 /*
 
@@ -11,15 +12,33 @@ which will be emitted from the socket connection within server/app.js
 */
 
 const createPokemon = (pokemon) => {
+  console.log(pokemon.types);
+  console.log(pokemon.name);
+  console.log(pokemon.frontSprite, pokemon.backSprite);
+  console.log(pokemon.baseSpecialAttack, pokemon.baseSpecialDefense, pokemon.baseSpeed);
+  console.log(pokemon.moveSet);
   const {
-    name, baseHealth, baseAttack, baseDefense, frontSprite, backSprite, types,
+    name,
+    baseHealth,
+    baseAttack,
+    baseDefense,
+    baseSpecialAttack,
+    baseSpecialDefense,
+    baseSpeed,
+    frontSprite,
+    backSprite,
+    types,
   } = pokemon;
+  const scaledHealth = calculateBaseHealth(baseHealth);
   return {
     name,
-    health: baseHealth,
-    initialHealth: baseHealth,
-    attack: baseAttack,
-    defense: baseDefense,
+    health: scaledHealth,
+    initialHealth: scaledHealth,
+    attack: calculateBaseStat(baseAttack),
+    defense: calculateBaseStat(baseDefense),
+    specialAttack: calculateBaseStat(baseSpecialAttack),
+    specialDefense: calculateBaseStat(baseSpecialDefense),
+    speed: calculateBaseStat(baseSpeed),
     sprites: { front_default: frontSprite, back_default: backSprite },
     types,
   };
