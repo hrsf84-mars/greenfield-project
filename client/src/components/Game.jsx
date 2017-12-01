@@ -248,10 +248,6 @@ export default class Game extends Component {
     this.setState({ teamConfirmed: true });
   }
 
-  handleAttackClick() {
-    alert('handleAttackClick triggered');
-  }
-
   renderGame() {
     const {
       pokemon, opponent, winner, name, attacking,
@@ -278,7 +274,7 @@ export default class Game extends Component {
           isActive={this.state.isActive}
           opponent={this.state.opponent}
         />
-        <GameState pokemon={this.state.pokemon} />
+        <GameState pokemon={this.state.pokemon} handleChoose={this.commandHandlers().choose} />
         <Chat
           messageArray={this.state.messageArray}
           chatInput={this.state.chatInput}
