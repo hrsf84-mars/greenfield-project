@@ -417,7 +417,7 @@ export default class Game extends Component {
             handleCommands={this.handleCommands}
             handleInputChange={this.handleInputChange}
           />
-          <button onClick={this.handleAttackClick}> attack </button>
+          <button className={css.gameButton} onClick={this.handleAttackClick}> attack </button>
         </div>
         {this.renderSideBar()}
       </div>
