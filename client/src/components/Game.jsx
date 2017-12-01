@@ -370,7 +370,7 @@ export default class Game extends Component {
   renderEmpty() {
     return (
       <div id="activePokemon" className={css.activeChoice}>
-        <h3>Choose a Pokemon</h3>
+        <h3>Choose a Pokmeon to see its stats</h3>
         <div id="activePic" />
         <div id="activeInfo" />
       </div>

@@ -15,7 +15,7 @@ const Team = (props) => {
             handleSetActive={props.handleSetActive}
             handleAddPokemon={props.handleAddPokemon}
           />
-          <TeamList pokemon={props.pokemon} />
+          <TeamList pokemon={props.pokemon} handleConfirm={props.handleConfirm} />
         </div>
         <div className={css.teamCol}>
           <ActiveChoice
@@ -25,11 +25,6 @@ const Team = (props) => {
           />
         </div>
       </div>
-      <br />
-      <br />
-      <button style={{ display: 'block' }} onClick={props.handleConfirm} className={css.gameButton}>
-        Confirm Team
-      </button>
     </div>
   );
 };

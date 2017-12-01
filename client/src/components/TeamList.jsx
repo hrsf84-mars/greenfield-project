@@ -15,6 +15,11 @@ const TeamList = (props) => {
           </div>
         );
       })}
+      <br />
+      <br />
+      <button style={{ display: 'block' }} onClick={props.handleConfirm} className={css.gameButton}>
+        Confirm Team
+      </button>
     </div>
   );
 };
