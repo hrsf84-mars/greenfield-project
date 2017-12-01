@@ -167,17 +167,25 @@ io.on('connection', (socket) => {
 
     if (data.free) {
       const player = isPlayer1 ? game.player1 : game.player2;
+      if (isPlayer1) {
+        game.p1Move = 'switch';
+      } else {
+        game.p2Move = 'switch';
+      }
+      // console.log('free switch', player);
       player.pokemon.unshift(player.pokemon.splice(data.index, 1)[0]);
       resolveTurn(game, game.p1Move, game.p2Move, io, data.gameid);
+      game.p1Move = '';
+      game.p2Move = '';
       return;
     }
 
     if (data.name === game.player1.name) {
-      console.log('p1move set to switch');
+      // console.log('p1move set to switch');
       game.player1.pokemon.unshift(game.player1.pokemon.splice(data.index, 1)[0]);
       game.p1Move = 'switch';
     } else {
-      console.log('p2move set to switch');
+      // console.log('p2move set to switch');
       game.player2.pokemon.unshift(game.player2.pokemon.splice(data.index, 1)[0]);
       game.p2Move = 'switch';
     }

@@ -70,6 +70,7 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
       io.to(gameid).emit('free switch', game);
     }
   } else {
+    console.log('next turn');
     io.to(gameid).emit('turn move', game);
   }
 };

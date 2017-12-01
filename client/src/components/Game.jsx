@@ -104,11 +104,13 @@ export default class Game extends Component {
       },
       attackProcess: (data) => {
         this.setState(prevState => (
-          { commandArray: prevState.commandArray.concat(data.basicAttackDialog) }
+          {
+            commandArray: prevState.commandArray.concat(data.basicAttackDialog),
+            freeSwitch: false,
+          }
         ));
       },
       freeSwitch: (data) => {
-        console.log('free switch available');
         if (this.state.player1) {
           this.setState({
             freeSwitch: true,
@@ -223,7 +225,7 @@ export default class Game extends Component {
             index,
             free: this.state.freeSwitch,
           });
-          this.setState({ freeSwitch: false });
+          // this.setState({ freeSwitch: false });
         } else if (health === 0) {
           alert('That pokemon has fainted!');
         } else {
@@ -245,7 +247,7 @@ export default class Game extends Component {
     if (false && !this.state.isActive) {
       alert('it is not your turn!');
     } else if (value === 'attack') {
-      console.log(this.state.pokemon[0].health);
+      // console.log(this.state.pokemon[0].health);
       if (this.state.pokemon[0].health <= 0) {
         alert('you must choose a new pokemon, this one has fainted!');
       } else if (this.state.freeSwitch) {
