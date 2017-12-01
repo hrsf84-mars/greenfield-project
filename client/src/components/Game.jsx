@@ -296,6 +296,7 @@ export default class Game extends Component {
       });
       setTimeout(() => this.commandHandlers().attack(), 300);
     }
+    alert('handleAttackClick triggered');
   }
 
   handleAddPokemon() {
