@@ -17,16 +17,6 @@ const processAttacks = (game, attacker, defender, io, gameid) => {
   io.to(gameid).emit('attack processed', {
     basicAttackDialog: turnlog,
   });
-  // if (
-  //   defender.pokemon[0].health <= 0 &&
-  //   defender.pokemon[1].health <= 0 &&
-  //   defender.pokemon[2].health <= 0
-  // ) {
-  //   targetPokemon.health = 0;
-  //   io.to(gameid).emit('gameover', { name: attacker.name });
-  // } else if (targetPokemon.health <= 0) {
-  //   targetPokemon.health = 0;
-  // }
 };
 
 exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
@@ -36,7 +26,7 @@ exports.resolveTurn = (game, p1Move, p2Move, io, gameid) => {
   const p1Pokemon = p1.pokemon[0];
   const p2Pokemon = p2.pokemon[0];
   const isP1Faster = p1Pokemon.speed >= p2Pokemon.speed;
-  console.log(p1Pokemon, p2Pokemon, isP1Faster);
+  // console.log(p1Pokemon, p2Pokemon, isP1Faster);
   const fast = {
     // player: p1,
     player: isP1Faster ? p1 : p2,

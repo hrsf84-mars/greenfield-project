@@ -32,6 +32,7 @@ export default class Game extends Component {
       commandArray: [{ command: 'The game will begin shortly - type "help" to learn how to play' }],
       socket: null,
       teamConfirmed: false,
+      freeSwitch: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -244,8 +245,11 @@ export default class Game extends Component {
     if (false && !this.state.isActive) {
       alert('it is not your turn!');
     } else if (value === 'attack') {
+      console.log(this.state.pokemon[0].health);
       if (this.state.pokemon[0].health <= 0) {
         alert('you must choose a new pokemon, this one has fainted!');
+      } else if (this.state.freeSwitch) {
+        alert('you must wait for your opponent to pick a new pokemon');
       } else {
         this.setState({
           attacking: true,
@@ -267,9 +271,9 @@ export default class Game extends Component {
     this.setState({ teamConfirmed: true });
   }
 
-  handleAttackClick() {
-    alert('handleAttackClick triggered');
-  }
+  // handleAttackClick() {
+  //   alert('handleAttackClick triggered');
+  // }
 
   renderGame() {
     const {
