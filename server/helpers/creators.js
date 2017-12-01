@@ -1,5 +1,6 @@
 const db = require('../../database/db.js');
 const { calculateBaseHealth, calculateBaseStat } = require('../../game-logic');
+const { BattleMovedex } = require('../../database/moves');
 
 /*
 
@@ -10,6 +11,26 @@ game. They return correctly parsed data that the client will eventually be expec
 which will be emitted from the socket connection within server/app.js
 
 */
+
+const createMoveMap = () => {
+  const allMoves = Object.values(BattleMovedex);
+  const moveMap = new Map();
+  allMoves.filter(({ basePower, isZ }) => basePower > 0 && !isZ).forEach((moveInfo) => {
+    moveMap.set(moveInfo.num, {
+      name: moveInfo.name,
+      power: moveInfo.basePower,
+      accuracy: moveInfo.accuracy,
+      category: moveInfo.category,
+      type: moveInfo.type,
+      isZ: moveInfo.isZ,
+    });
+  });
+
+  console.log(moveMap.get(403));
+  return moveMap;
+};
+
+const moveMap = createMoveMap();
 
 const createPokemon = (pokemon) => {
   // console.log(pokemon.types);
@@ -28,8 +49,16 @@ const createPokemon = (pokemon) => {
     frontSprite,
     backSprite,
     types,
+    moveSet,
   } = pokemon;
   const scaledHealth = calculateBaseHealth(baseHealth);
+  const moves = [];
+  for (let i = moveSet.length - 1; i >= moveSet.length - 4; i -= 1) {
+    moves.push(moveMap.get(Number(moveSet[i])));
+  }
+
+  console.log(name, moves);
+
   return {
     name,
     health: scaledHealth,
@@ -41,6 +70,8 @@ const createPokemon = (pokemon) => {
     speed: calculateBaseStat(baseSpeed),
     sprites: { front_default: frontSprite, back_default: backSprite },
     types,
+    // moveSet,
+    moves,
   };
 };
 
@@ -87,6 +118,7 @@ const createTurnlog = (player, opponent, turn, type) => {
 };
 
 module.exports = {
+  createMoveMap,
   createPokemon,
   createPlayer,
   createTurnlog,
