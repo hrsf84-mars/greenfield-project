@@ -34,7 +34,7 @@ export default class Game extends Component {
       teamConfirmed: false,
       freeSwitch: false,
       activeChoice: null,
-      pokemonOptions: [],
+      pokemonOptions: [[]],
       teamCount: 0,
       isWaiting: false,
     };
@@ -440,7 +440,7 @@ export default class Game extends Component {
 
   renderOptions() {
     return (
-      this.state.pokemonOptions.map((pokemon) => {
+      this.state.pokemonOptions[this.state.teamCount].map((pokemon) => {
         return (
           <div style={{ display: 'inline-block', width: '150px' }} key={pokemon.name} onClick={() => this.handleSetActive(pokemon)}>
             <img src={pokemon.sprites.front_default} alt="" />
