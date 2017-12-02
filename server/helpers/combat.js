@@ -18,7 +18,7 @@ const processAttacks = (game, attacker, defender, moveIdx, io, gameid) => {
     type: attacker.pokemon[0].types[0],
     isZ: false,
   };
-  console.log(attackingMove);
+  // console.log(attackingMove);
   const turnResults = damageCalculation(attacker, defender, attackingMove);
   const targetPokemon = defender.pokemon[0];
   targetPokemon.health -= turnResults.damageToBeDone;

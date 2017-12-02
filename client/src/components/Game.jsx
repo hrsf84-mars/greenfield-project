@@ -264,17 +264,17 @@ export default class Game extends Component {
         break;
       }
     }
-    console.log(value, moveIdx);
+    // console.log(value, moveIdx);
     // if (!this.state.isActive) {
     //   alert('it is not your turn!');
     // }
     if (moveIdx >= 0 || value === 'attack') {
       // console.log(this.state.pokemon[0].health);
       if (this.state.pokemon[0].health <= 0) {
-        this.setState({gameMessage: 'you must choose a new pokemon, this one has fainted!'});
+        this.setState({ gameMessage: 'you must choose a new pokemon, this one has fainted!' });
         // alert('you must choose a new pokemon, this one has fainted!');
       } else if (this.state.freeSwitch) {
-        this.setState({gameMessage: 'you must wait for your opponent to pick a new pokemon'});
+        this.setState({ gameMessage: 'you must wait for your opponent to pick a new pokemon' });
         // alert('you must wait for your opponent to pick a new pokemon');
       } else {
         this.setState({

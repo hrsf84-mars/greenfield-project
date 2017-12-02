@@ -26,7 +26,7 @@ const createMoveMap = () => {
     });
   });
 
-  console.log(moveMap.get(403));
+  // console.log('MOVELIST LENGTH: ', allMoves.length);
   return moveMap;
 };
 
@@ -65,7 +65,7 @@ const createPokemon = (pokemon) => {
     }
   }
 
-  console.log(name, moves);
+  // console.log(name, moves, moveSet.length);
 
   return {
     name,
