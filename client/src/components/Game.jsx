@@ -300,7 +300,20 @@ export default class Game extends Component {
   }
 
   handleConfirmTeam() {
-    this.state.teamCount === 3 ? this.setState({ teamConfirmed: true }) : null;
+    if (this.state.teamCount === 3) {
+      this.setState({ teamConfirmed: true });
+      /*
+      // do we need to handle whether or not this is coming from player 1 or player 2?
+      socket.emit('team selected', { 'pokemon', this.state.pokemon })
+      .then(function(data) {
+        socket.on('opponent joined', function(data) {
+          this.setState({ opponent: data.opponent });
+        });
+      });
+      // when you get a confirmation from the server that its received and set the client's pokemon
+      // the client should then wait to receive an object with the other player's selection
+      */
+    }
   }
 
   handleAttackClick(name) {
