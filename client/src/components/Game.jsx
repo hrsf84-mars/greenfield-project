@@ -8,6 +8,7 @@ import GameOverView from './GameOverView';
 import GameState from './GameState';
 import Logo from './Logo';
 import Team from './Team';
+import ChooseMoves from './ChooseMoves';
 import css from '../styles.css';
 
 import help from './../../../utils/helpers';
@@ -50,6 +51,7 @@ export default class Game extends Component {
     this.handleAddPokemon = this.handleAddPokemon.bind(this);
     this.renderBattle = this.renderBattle.bind(this);
     this.renderOptions = this.renderOptions.bind(this);
+    this.renderMoveOptions = this.renderMoveOptions.bind(this);
   }
 
   componentDidMount() {
@@ -381,45 +383,65 @@ export default class Game extends Component {
     );
   }
 
+  renderMoveOptions() {
+    return (
+      this.state.activeChoice.moves.map((move) => {
+        return (
+          <li key={move.name} className={css.moveItem}>
+            <div>
+              {move.name}
+            </div>
+          </li>
+        );
+      })
+    );
+  }
+
   renderActive() {
     return (
       <div id="activePokemon" className={css.activeChoice}>
-        <div className={css.activePicture}>
-          <h3>{this.state.activeChoice.name}</h3>
-          <div id="activePic">
-            <img src={this.state.activeChoice.sprites.front_default} alt="" />
+        <div>
+          <div className={css.activePicture}>
+            <h3>{this.state.activeChoice.name}</h3>
+            <div id="activePic">
+              <img src={this.state.activeChoice.sprites.front_default} alt="" />
+            </div>
+          </div>
+          <div className={css.statsTable}>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Health</td>
+                  <td>{this.state.activeChoice.health}</td>
+                </tr>
+                <tr>
+                  <td>Attack</td>
+                  <td>{this.state.activeChoice.attack}</td>
+                </tr>
+                <tr>
+                  <td>Special Attack</td>
+                  <td>{this.state.activeChoice.specialAttack}</td>
+                </tr>
+                <tr>
+                  <td>Defense</td>
+                  <td>{this.state.activeChoice.defense}</td>
+                </tr>
+                <tr>
+                  <td>Special Defense</td>
+                  <td>{this.state.activeChoice.specialDefense}</td>
+                </tr>
+                <tr>
+                  <td>Speed</td>
+                  <td>{this.state.activeChoice.speed}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <div className={css.statsTable}>
-          <table>
-            <tbody>
-              <tr>
-                <td>Health</td>
-                <td>{this.state.activeChoice.health}</td>
-              </tr>
-              <tr>
-                <td>Attack</td>
-                <td>{this.state.activeChoice.attack}</td>
-              </tr>
-              <tr>
-                <td>Special Attack</td>
-                <td>{this.state.activeChoice.specialAttack}</td>
-              </tr>
-              <tr>
-                <td>Defense</td>
-                <td>{this.state.activeChoice.defense}</td>
-              </tr>
-              <tr>
-                <td>Special Defense</td>
-                <td>{this.state.activeChoice.specialDefense}</td>
-              </tr>
-              <tr>
-                <td>Speed</td>
-                <td>{this.state.activeChoice.speed}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <ChooseMoves
+          moves={this.state.activeChoice.moves}
+          renderMoveOptions={this.renderMoveOptions}
+        />
       </div>
     );
   }

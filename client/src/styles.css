@@ -388,8 +388,12 @@ body {
   text-align: center;
 }
 
-.pickMoves {
+.moveList {
+  display: inline-block;
+}
 
+.moveItem {
+  text-align: left;
 }
 
 .teamList {
@@ -402,10 +406,12 @@ body {
   text-align: left;
   margin-top: 18px;
   margin-right: 24px;
+  margin-left: 10px;
 }
 
 .activePicture {
   display: inline-block;
   float: left;
-  margin-left: 24px
+  margin-left: 24px;
+  margin-right: 10px;
 }

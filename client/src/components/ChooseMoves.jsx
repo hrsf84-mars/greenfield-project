@@ -3,14 +3,18 @@ import css from '../styles.css';
 
 const ChooseMoves = (props) => {
   return (
-    <div className={css.listPokemon}>
-      <h3>zChoose four moves</h3>
+    <div className={css.moveList}>
       <br />
+      <div style={{display: 'block'}}>
+        <h3 style={{textAlign: 'center'}}>Choose four moves</h3>
+      </div>
       <div className={css.moveList}>
+        <ul>
+          {props.renderMoveOptions()}
+        </ul>
       </div>
     </div>
   );
 };
-        // {props.teamCount < 3 ? props.renderOptions() : null}
 
 export default ChooseMoves;
