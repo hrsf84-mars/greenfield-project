@@ -137,11 +137,11 @@ io.on('connection', (socket) => {
     const game = games.get(data.gameid);
     if (data.player) {
       game.player1.pokemon = data.pokemon;
+      io.to(data.gameid).emit('ready', game);
     } else {
       game.player2.pokemon = data.pokemon;
     }
     games.set(data.gameid, game);
-    io.to(data.gameid).emit('ready', game);
   });
 
   // socket.on('confirmteam', (data){})
