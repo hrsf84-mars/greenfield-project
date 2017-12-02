@@ -69,7 +69,7 @@ const createPokemon = (pokemon) => {
   for (let i = 0; i < moveSet.length; i += 1) {
     const move = moveMap.get(moveSet[i]);
     if (move) {
-      moves.push(move);
+      detailedMoveSet.push(move);
     }
   }
 

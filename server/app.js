@@ -131,7 +131,7 @@ io.on('connection', (socket) => {
       game.player2.ready = true;
     }
     games.set(data.gameid, game);
-    if (game.player1.ready && game.player2.ready) {
+    if (game.player1 && game.player1.ready && game.player2 && game.player2.ready) {
       io.to(data.gameid).emit('ready', game);
     }
   });
