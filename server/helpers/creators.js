@@ -65,8 +65,6 @@ const createPokemon = (pokemon) => {
     }
   }
 
-  // console.log(name, moves, moveSet.length);
-
   return {
     name,
     health: scaledHealth,
@@ -78,7 +76,7 @@ const createPokemon = (pokemon) => {
     speed: calculateBaseStat(baseSpeed),
     sprites: { front_default: frontSprite, back_default: backSprite },
     types,
-    // moveSet,
+    moveSet,
     moves,
   };
 };
@@ -113,15 +111,10 @@ const createPlayer = (player, number) => (
     createPokemonArr()
       .then((pokes) => {
         // console.log('pokes length', pokes.length);
-        let pokemon = [];
+        const pokemon = [];
         for (let i = 0; i < 9; i += 3) {
           pokemon.push(pokes.slice(i, (i + 3)));
         }
-        // console.log(pokeArr);
-        // console.log('full arr', pokes[0]);
-        // const [pokemon] = pokeArr;
-        // console.log('destructured', pokemon);
-        // console.log(pokemon[0].length);
         resolve({
           player: number,
           name: player.name,
@@ -130,15 +123,8 @@ const createPlayer = (player, number) => (
       })
       .catch(err => reject(err));
   })
-  // creates a var called pokemoncallsArr = []
-  // pushes a create player with (player, number) into the pokemoncallsArr until pokemoncallsArr = 3
-  // promise.all pokemoncalls
-  // .then
-  // resolve(pokemoncalls)
-  //
-  // .catch(err => reject err)
 );
-// const createTurnlog = (game, turn, type) => {
+
 const createTurnlog = (player, opponent, turn, type) => {
   const playerPokemonName = player.pokemon[0].name;
   if (type === 'attack') {
