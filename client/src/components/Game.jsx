@@ -93,13 +93,7 @@ export default class Game extends Component {
         ));
       },
       playerInitialized: (data) => {
-<<<<<<< HEAD
-        console.log(data.pokemon);
-||||||| merged common ancestors
-        console.log(data);
-=======
         // console.log(data);
->>>>>>> Game logic bug fix
         this.setState({
           [data.player]: true,
           pokemonOptions: data.pokemon,
