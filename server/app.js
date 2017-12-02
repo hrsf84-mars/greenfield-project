@@ -121,11 +121,27 @@ io.on('connection', (socket) => {
         .then((player2) => {
           game.player2 = player2;
           io.to(socket.id).emit('player', player2);
-          io.to(data.gameid).emit('ready', game);
+          // io.to(data.gameid).emit('ready', game);
         });
     } else {
       io.to(socket.id).emit('gamefull', 'this game is full!');
     }
+  });
+
+  socket.on('selectPokemon', (data) => {
+    // console.log('selectPokemon event triggered');
+    // console.log('data.gameid: ' + data.gameid);
+    // console.log('data.player: ' + data.player);
+    // console.log('data.name: ' + data.name);
+    // console.log('data.pokemon: ' + data.pokemon);
+    const game = games.get(data.gameid);
+    if (data.player) {
+      game.player1.pokemon = data.pokemon;
+    } else {
+      game.player2.pokemon = data.pokemon;
+    }
+    games.set(data.gameid, game);
+    io.to(data.gameid).emit('ready', game);
   });
 
   // socket.on('confirmteam', (data){})
@@ -231,12 +247,7 @@ io.on('connection', (socket) => {
 
 
 app.post('/login', async (req, resp) => {
-  console.log('post request on /login');
   const { username, password } = req.body;
-
-  console.log('username', username);
-  console.log('password', password);
-
   const user = await db.Users.findOne({ where: { username } });
   if (!user) {
     resp.writeHead(201, { 'Content-Type': 'text/plain' });

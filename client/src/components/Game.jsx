@@ -320,6 +320,14 @@ export default class Game extends Component {
   handleConfirmTeam() {
     if (this.state.teamCount === 3) {
       this.setState({ teamConfirmed: true });
+
+      const playerData = {
+        gameid: this.props.match.params.gameid,
+        player: this.state.isPlayer1,
+        name: this.state.name,
+        pokemon: this.state.pokemon,
+      };
+      this.state.socket.emit('selectPokemon', playerData );
       /*
       // do we need to handle whether or not this is coming from player 1 or player 2?
       socket.emit('team selected', { 'pokemon', this.state.pokemon })
@@ -391,12 +399,14 @@ export default class Game extends Component {
   renderSideBar() {
     return (
       <div className={css.stateContainer}>
-        <Logo
+        {
+          this.state.opponent ? <Logo
           name={this.state.name}
           isWaiting={this.state.isWaiting}
-          opponent={this.state.opponent}
+          opponent={this.state.opponent} 
           message={this.state.gameMessage}
-        />
+          /> : <a> Awaiting opponents pokemon... </a>
+        }
         <GameState pokemon={this.state.pokemon} handleChoose={this.commandHandlers().choose} />
         <Chat
           messageArray={this.state.messageArray}
