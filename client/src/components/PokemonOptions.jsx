@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import css from '../styles.css';
 
-
-// use the teamCount as an index number.  if there teamCount is three, then don't render anything
 const PokemonOptions = (props) => {
   return (
     <div className={css.listPokemon}>

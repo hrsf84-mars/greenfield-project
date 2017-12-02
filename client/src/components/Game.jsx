@@ -320,7 +320,6 @@ export default class Game extends Component {
   handleConfirmTeam() {
     if (this.state.teamCount === 3) {
       this.setState({ teamConfirmed: true });
-
       const playerData = {
         gameid: this.props.match.params.gameid,
         player: this.state.isPlayer1,
@@ -328,17 +327,6 @@ export default class Game extends Component {
         pokemon: this.state.pokemon,
       };
       this.state.socket.emit('selectPokemon', playerData );
-      /*
-      // do we need to handle whether or not this is coming from player 1 or player 2?
-      socket.emit('team selected', { 'pokemon', this.state.pokemon })
-      .then(function(data) {
-        socket.on('opponent joined', function(data) {
-          this.setState({ opponent: data.opponent });
-        });
-      });
-      // when you get a confirmation from the server that its received and set the client's pokemon
-      // the client should then wait to receive an object with the other player's selection
-      */
     }
   }
 
@@ -371,8 +359,6 @@ export default class Game extends Component {
           teamCount: newCount,
           activeChoice: null,
         });
-      } else {
-        console.log('Too many pokemon');
       }
     }
   }
