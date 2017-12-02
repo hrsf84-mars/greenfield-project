@@ -391,3 +391,7 @@ body {
 .pickMoves {
 
 }
+
+.teamList {
+  min-height: 148px;
+}
