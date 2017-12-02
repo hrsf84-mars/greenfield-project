@@ -11,9 +11,7 @@ const bcrypt = Promise.promisifyAll(require('bcrypt'));
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const passport = require('passport');
-// const axios = require('axios');
-const { createPokemon, createTurnlog, createPlayer } = require('./helpers/creators.js');
-// const { damageCalculation } = require('../game-logic.js');
+const { createPlayer } = require('./helpers/creators.js');
 const { resolveTurn } = require('./helpers/combat');
 
 const saltRounds = 10;
@@ -64,7 +62,6 @@ The sample shape of a game is:
   {
     player1: object,
     player2: object,
-    // playerTurn: string ('player1' or 'player2'),
     p1Move: string,
     p2Move: string,
     p1MoveIdx: number,
@@ -102,10 +99,6 @@ io.on('connection', (socket) => {
     if (!game) {
       createPlayer(data, 'player1')
         .then((player1) => {
-          // console.log('this is player1', player1);
-          // console.log('these are pokemon', player1.pokemon);
-          // console.log('data to be returned', player1.pokemon);
-          // console.log(data.gameid);
           games.set(data.gameid, {
             player1,
             player2: null,
@@ -129,11 +122,6 @@ io.on('connection', (socket) => {
   });
 
   socket.on('selectPokemon', (data) => {
-    // console.log('selectPokemon event triggered');
-    // console.log('data.gameid: ' + data.gameid);
-    // console.log('data.player: ' + data.player);
-    // console.log('data.name: ' + data.name);
-    // console.log('data.pokemon: ' + data.pokemon);
     const game = games.get(data.gameid);
     if (data.player) {
       game.player1.pokemon = data.pokemon;
@@ -189,15 +177,6 @@ io.on('connection', (socket) => {
 
   socket.on('switch', (data) => {
     const game = games.get(data.gameid);
-    // const player = game.playerTurn;
-    // const opponent = game.playerTurn === 'player1' ? 'player2' : 'player1';
-    // game[player].pokemon.unshift(game[player].pokemon.splice(data.index, 1)[0]);
-    // const turnlog = createTurnlog(game, null, 'switch');
-    // game.playerTurn = opponent;
-    // io.to(data.gameid).emit('attack processed', {
-    //   basicAttackDialog: turnlog,
-    // });
-    // io.to(data.gameid).emit('turn move', game);
 
     const isPlayer1 = data.name === game.player1.name;
 
@@ -210,8 +189,6 @@ io.on('connection', (socket) => {
         game.p2Move = 'switch';
         game.p2MoveIdx = data.index;
       }
-      // console.log('free switch', player);
-      // player.pokemon.unshift(player.pokemon.splice(data.index, 1)[0]);
       resolveTurn(game, game.p1Move, game.p1MoveIdx, game.p2Move, game.p2MoveIdx, io, data.gameid);
       game.p1Move = '';
       game.p2Move = '';
@@ -219,13 +196,9 @@ io.on('connection', (socket) => {
     }
 
     if (data.name === game.player1.name) {
-      // console.log('p1move set to switch');
-      // game.player1.pokemon.unshift(game.player1.pokemon.splice(data.index, 1)[0]);
       game.p1Move = 'switch';
       game.p1MoveIdx = data.index;
     } else {
-      // console.log('p2move set to switch');
-      // game.player2.pokemon.unshift(game.player2.pokemon.splice(data.index, 1)[0]);
       game.p2Move = 'switch';
       game.p2MoveIdx = data.index;
     }

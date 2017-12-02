@@ -104,13 +104,11 @@ export default class Game extends Component {
       handleReady: (data) => {
         if (this.state.isPlayer1) {
           this.setState({
-            // isActive: true,
             opponent: data.player2,
             gameStatus: 'Select a move',
           });
         } else {
           this.setState({
-            // isActive: false,
             opponent: data.player1,
             gameStatus: 'Select a move',
           });
@@ -126,10 +124,8 @@ export default class Game extends Component {
             gameStatus: 'Select a move',
           }
         ));
-        // console.log('turn processed, freeSwitch:', this.state.hasFreeSwitch);
       },
       handleWait: (data) => {
-        // console.log(data, data.player, data.player === 'player1');
         const isPlayer1 = data.player === 'player1';
         if (this.state.isPlayer1 && isPlayer1) {
           this.setState({
@@ -142,15 +138,8 @@ export default class Game extends Component {
             gameStatus: 'Waiting... Your opponent has not selected a move yet',
           });
         }
-
-        // if (this.state.isPlayer1) {
-        //   this.setState({ isWaiting: data.player === 'player1' });
-        // } else {
-        //   this.setState({ isWaiting: data.player === 'player2' });
-        // }
       },
       freeSwitch: (data) => {
-        // console.log('free switch invoked');
         if (this.state.isPlayer1) {
           this.setState({
             hasFreeSwitch: true,
@@ -182,7 +171,6 @@ export default class Game extends Component {
         this.setState({
           winner: data.name,
           gameOver: true,
-          // isActive: false,
         });
         setTimeout(() => this.props.history.replace('/'), 20000);
       },
@@ -251,7 +239,6 @@ export default class Game extends Component {
         } else if (!isAvailable) {
           this.setState({ gameMessage: 'You do not have that pokemon!' });
         } else {
-          // console.log('free switch', this.state.hasFreeSwitch);
           this.state.socket.emit('switch', {
             gameid: this.props.match.params.gameid,
             name: this.state.name,
@@ -281,10 +268,6 @@ export default class Game extends Component {
         break;
       }
     }
-    // console.log(value, moveIdx);
-    // if (!this.state.isActive) {
-    //   alert('it is not your turn!');
-    // }
     if (moveIdx >= 0 || value === 'attack') {
       if (this.state.pokemon[0].health <= 0) {
         this.setState({ gameMessage: 'you must choose a new pokemon, this one has fainted!' });
@@ -321,7 +304,7 @@ export default class Game extends Component {
         name: this.state.name,
         pokemon: this.state.pokemon,
       };
-      this.state.socket.emit('selectPokemon', playerData );
+      this.state.socket.emit('selectPokemon', playerData);
     }
   }
 
@@ -380,11 +363,11 @@ export default class Game extends Component {
       <div className={css.stateContainer}>
         {
           this.state.opponent ? <Logo
-          name={this.state.name}
-          isWaiting={this.state.isWaiting}
-          status={this.state.gameStatus}
-          opponent={this.state.opponent}
-          message={this.state.gameMessage}
+            name={this.state.name}
+            isWaiting={this.state.isWaiting}
+            status={this.state.gameStatus}
+            opponent={this.state.opponent}
+            message={this.state.gameMessage}
           /> : <a> Awaiting opponents pokemon... </a>
         }
         <GameState pokemon={this.state.pokemon} handleChoose={this.commandHandlers().choose} />

@@ -65,6 +65,14 @@ const createPokemon = (pokemon) => {
     }
   }
 
+  const detailedMoveSet = [];
+  for (let i = 0; i < moveSet.length; i += 1) {
+    const move = moveMap.get(moveSet[i]);
+    if (move) {
+      moves.push(move);
+    }
+  }
+
   return {
     name,
     health: scaledHealth,
@@ -76,7 +84,7 @@ const createPokemon = (pokemon) => {
     speed: calculateBaseStat(baseSpeed),
     sprites: { front_default: frontSprite, back_default: backSprite },
     types,
-    moveSet,
+    moveSet: detailedMoveSet,
     moves,
   };
 };
@@ -151,5 +159,4 @@ module.exports = {
   createPokemon,
   createPlayer,
   createTurnlog,
-  // createPokemonArr
 };
