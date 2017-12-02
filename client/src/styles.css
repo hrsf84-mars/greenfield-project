@@ -395,3 +395,17 @@ body {
 .teamList {
   min-height: 148px;
 }
+
+.statsTable {
+  display: inline-block;
+  float: right;
+  text-align: left;
+  margin-top: 18px;
+  margin-right: 24px;
+}
+
+.activePicture {
+  display: inline-block;
+  float: left;
+  margin-left: 24px
+}

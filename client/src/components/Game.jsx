@@ -421,18 +421,41 @@ export default class Game extends Component {
   renderActive() {
     return (
       <div id="activePokemon" className={css.activeChoice}>
-        <h3>{this.state.activeChoice.name}</h3>
-        <div id="activePic">
-          <img src={this.state.activeChoice.sprites.front_default} alt="" />
+        <div className={css.activePicture}>
+          <h3>{this.state.activeChoice.name}</h3>
+          <div id="activePic">
+            <img src={this.state.activeChoice.sprites.front_default} alt="" />
+          </div>
         </div>
-        <div id="activeInfo">
-          <h5 style={{ marginBottom: '0px', marginTop: '2px' }}>{`${this.state.activeChoice.name}'s Stats:`}</h5>
-          <h6 style={{ marginBottom: '0px' }}>{`Health: ${this.state.activeChoice.health} / ${this.state.activeChoice.initialHealth}`}</h6>
-          <h6 style={{ marginBottom: '0px' }}>{`Attack: ${this.state.activeChoice.attack}`}</h6>
-          <h6 style={{ marginBottom: '0px' }}>{`Special Attack: ${this.state.activeChoice.specialAttack}`}</h6>
-          <h6 style={{ marginBottom: '0px' }}>{`Defense: ${this.state.activeChoice.defense}`}</h6>
-          <h6 style={{ marginBottom: '0px' }}>{`Special Defense: ${this.state.activeChoice.specialDefense}`}</h6>
-          <h6 style={{ marginBottom: '0px' }}>{`Speed: ${this.state.activeChoice.speed}`}</h6>
+        <div className={css.statsTable}>
+          <table>
+            <tbody>
+              <tr>
+                <td>Health</td>
+                <td>{this.state.activeChoice.health}</td>
+              </tr>
+              <tr>
+                <td>Attack</td>
+                <td>{this.state.activeChoice.attack}</td>
+              </tr>
+              <tr>
+                <td>Special Attack</td>
+                <td>{this.state.activeChoice.specialAttack}</td>
+              </tr>
+              <tr>
+                <td>Defense</td>
+                <td>{this.state.activeChoice.defense}</td>
+              </tr>
+              <tr>
+                <td>Special Defense</td>
+                <td>{this.state.activeChoice.specialDefense}</td>
+              </tr>
+              <tr>
+                <td>Speed</td>
+                <td>{this.state.activeChoice.speed}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     );
