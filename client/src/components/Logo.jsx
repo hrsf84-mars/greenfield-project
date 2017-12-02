@@ -2,14 +2,15 @@ import React from 'react';
 import css from '../styles.css';
 
 function Logo(props) {
-  const renderTurn = () => {
-    if (props.opponent) {
-      if (props.isWaiting) {
-        return 'Waiting... Your opponent has not selected a move yet';
-      }
-      return 'Select a Move';
-    }
-    return null;
+  const renderStatus = () => {
+    // if (props.opponent) {
+    //   if (props.isWaiting) {
+    //     return 'Waiting... Your opponent has not selected a move yet';
+    //   }
+    //   return 'Select a Move';
+    // }
+    // return null;
+    return props.status;
   };
 
   return (
@@ -24,7 +25,7 @@ function Logo(props) {
         </span>Chattermon
       </h2>
       <h4>{props.name} v. {props.opponent ? props.opponent.name : '???' }</h4>
-      <h4>{renderTurn()}</h4>
+      <h4>{renderStatus()}</h4>
       <h4 style={{ color: 'red' }}>{props.message}</h4>
     </div>
   );

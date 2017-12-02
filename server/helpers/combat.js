@@ -2,7 +2,6 @@ const { damageCalculation } = require('../../game-logic');
 const { createTurnlog } = require('./creators');
 
 const processSwitches = (game, player, moveIdx, io, gameid) => {
-  // console.log('process switch on server');
   player.pokemon.unshift(player.pokemon.splice(moveIdx, 1)[0]);
   const turnlog = createTurnlog(player, null, null, 'switch');
   io.to(gameid).emit('attack processed', {
@@ -38,7 +37,6 @@ exports.resolveTurn = (game, p1Move, p1MoveIdx, p2Move, p2MoveIdx, io, gameid) =
   // const p1Pokemon = p1.pokemon[0];
   // const p2Pokemon = p2.pokemon[0];
   const isP1Faster = p1.pokemon[0].speed >= p2.pokemon[0].speed;
-  // console.log(p1Pokemon, p2Pokemon, isP1Faster);
   const fast = {
     // player: p1,
     player: isP1Faster ? p1 : p2,
