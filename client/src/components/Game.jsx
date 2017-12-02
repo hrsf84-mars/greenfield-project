@@ -47,6 +47,7 @@ export default class Game extends Component {
     this.handleSetActive = this.handleSetActive.bind(this);
     this.renderActive = this.renderActive.bind(this);
     this.handleAddPokemon = this.handleAddPokemon.bind(this);
+    this.renderBattle = this.renderBattle.bind(this);
   }
 
   componentDidMount() {
@@ -302,7 +303,10 @@ export default class Game extends Component {
     this.state.teamCount === 3 ? this.setState({ teamConfirmed: true }) : null;
   }
 
-  handleAttackClick() {
+  handleAttackClick(name) {
+    let nameMap = this.state.pokemon[0].moves.map( m => m.name );
+    let moveIdx = nameMap.indexOf(name);
+
     if (this.state.pokemon[0].health <= 0) {
       this.setState({gameMessage: 'you must choose a new pokemon, this one has fainted!'});
       // alert('you must choose a new pokemon, this one has fainted!');
@@ -313,7 +317,7 @@ export default class Game extends Component {
       this.setState({
         attacking: true,
       });
-      setTimeout(() => this.commandHandlers().attack(), 300);
+      setTimeout(() => this.commandHandlers().attack(moveIdx), 300);
     }
   }
 
@@ -429,7 +433,10 @@ export default class Game extends Component {
             handleCommands={this.handleCommands}
             handleInputChange={this.handleInputChange}
           />
-          <button className={css.gameButton} onClick={this.handleAttackClick}> attack </button>
+          {this.state.pokemon[0].moves.map(move => {
+            return <button className={css.gameButton} onClick={() => {this.handleAttackClick(move.name)}}> {move.name} </button>
+          })}
+          
         </div>
         {this.renderSideBar()}
       </div>
