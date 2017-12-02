@@ -379,7 +379,7 @@ body {
   justify-content: space-between;
   background-color: rgb(249, 248, 218);
   color: rgb(117, 114, 104);
-  height: 400px;
+  height: 645px;
   width: 80%;
   padding: 10px;
   margin-bottom: 10px;
@@ -391,7 +391,7 @@ body {
 .moveList {
   display: inline-block;
   overflow-y: scroll;
-  height: 400px;
+  height: 500px;
 }
 
 .moveItem {

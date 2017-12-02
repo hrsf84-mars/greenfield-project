@@ -385,7 +385,7 @@ export default class Game extends Component {
 
   renderMoveOptions() {
     return (
-      this.state.activeChoice.moves.map((move) => {
+      this.state.activeChoice.moveSet.map((move) => {
         return (
           <tr key={move.name} className={css.moveItem}>
             <td>x</td>
