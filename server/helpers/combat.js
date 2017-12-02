@@ -1,7 +1,8 @@
 const { damageCalculation } = require('../../game-logic');
 const { createTurnlog } = require('./creators');
 
-const processSwitches = (game, player, io, gameid) => {
+const processSwitches = (game, player, moveIdx, io, gameid) => {
+  player.pokemon.unshift(game.player1.pokemon.splice(moveIdx, 1)[0]);
   const turnlog = createTurnlog(player, null, null, 'switch');
   io.to(gameid).emit('attack processed', {
     basicAttackDialog: turnlog,
@@ -18,7 +19,7 @@ const processAttacks = (game, attacker, defender, moveIdx, io, gameid) => {
     type: attacker.pokemon[0].types[0],
     isZ: false,
   };
-  // console.log(attackingMove);
+  console.log(attackingMove);
   const turnResults = damageCalculation(attacker, defender, attackingMove);
   const targetPokemon = defender.pokemon[0];
   targetPokemon.health -= turnResults.damageToBeDone;
@@ -52,10 +53,10 @@ exports.resolveTurn = (game, p1Move, p1MoveIdx, p2Move, p2MoveIdx, io, gameid) =
 
   // handle switches
   if (fast.move === 'switch') {
-    processSwitches(game, fast.player, io, gameid);
+    processSwitches(game, fast.player, fast.moveIdx, io, gameid);
   }
   if (slow.move === 'switch') {
-    processSwitches(game, slow.player, io, gameid);
+    processSwitches(game, slow.player, slow.moveIdx, io, gameid);
   }
 
   // handle attacks
