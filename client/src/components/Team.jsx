@@ -14,6 +14,8 @@ const Team = (props) => {
             options={props.pokemonOptions}
             handleSetActive={props.handleSetActive}
             handleAddPokemon={props.handleAddPokemon}
+            renderOptions={props.renderOptions}
+            teamCount={props.teamCount}
           />
           <TeamList pokemon={props.pokemon} handleConfirm={props.handleConfirm} />
         </div>

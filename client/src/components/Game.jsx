@@ -48,6 +48,7 @@ export default class Game extends Component {
     this.renderActive = this.renderActive.bind(this);
     this.handleAddPokemon = this.handleAddPokemon.bind(this);
     this.renderBattle = this.renderBattle.bind(this);
+    this.renderOptions = this.renderOptions.bind(this);
   }
 
   componentDidMount() {
@@ -420,6 +421,20 @@ export default class Game extends Component {
     );
   }
 
+  renderOptions() {
+    return (
+      this.state.pokemonOptions.map((pokemon) => {
+        return (
+          <div style={{ display: 'inline-block', width: '150px' }} key={pokemon.name} onClick={() => this.handleSetActive(pokemon)}>
+            <img src={pokemon.sprites.front_default} alt="" />
+            <h5 style={{ marginBottom: '0px', marginTop: '2px' }}>{pokemon.name}</h5>
+            <h6 style={{ marginBottom: '0px' }}>{pokemon.health} / {pokemon.initialHealth}</h6>
+          </div>
+        );
+      })
+    );
+  }
+
   renderTeam() {
     return (
       <Team
@@ -431,6 +446,8 @@ export default class Game extends Component {
         renderActive={this.renderActive}
         renderEmpty={this.renderEmpty}
         handleAddPokemon={this.handleAddPokemon}
+        renderOptions={this.renderOptions}
+        teamCount={this.state.teamCount}
       />
     );
   }
