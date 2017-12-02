@@ -18,13 +18,12 @@ export default class Game extends Component {
 
     this.state = {
       gameMessage: '',
-      player1: false,
-      player2: false,
+      isPlayer1: false,
       messageArray: [],
       name: null,
       pokemon: [],
       opponent: null,
-      isActive: null,
+      // isActive: null,
       attacking: false,
       gameOver: false,
       winner: null,
@@ -37,6 +36,7 @@ export default class Game extends Component {
       activeChoice: null,
       pokemonOptions: [],
       teamCount: 0,
+      isWaiting: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -72,6 +72,7 @@ export default class Game extends Component {
           socket.on('player', this.socketHandlers().playerInitialized);
           socket.on('ready', this.socketHandlers().handleReady);
           socket.on('attack processed', this.socketHandlers().attackProcess);
+          socket.on('waiting', this.socketHandlers().handleWait);
           socket.on('free switch', this.socketHandlers().freeSwitch);
           socket.on('turn move', this.socketHandlers().turnMove);
           socket.on('gameover', this.socketHandlers().gameOver);
@@ -95,19 +96,19 @@ export default class Game extends Component {
       playerInitialized: (data) => {
         // console.log(data);
         this.setState({
-          [data.player]: true,
+          isPlayer1: data.player === 'player1',
           pokemonOptions: data.pokemon,
         });
       },
       handleReady: (data) => {
-        if (this.state.player1) {
+        if (this.state.isPlayer1) {
           this.setState({
-            isActive: true,
+            // isActive: true,
             opponent: data.player2,
           });
         } else {
           this.setState({
-            isActive: false,
+            // isActive: false,
             opponent: data.player1,
           });
         }
@@ -118,13 +119,22 @@ export default class Game extends Component {
           {
             commandArray: prevState.commandArray.concat(data.basicAttackDialog),
             freeSwitch: false,
+            isWaiting: false,
           }
         ));
         // console.log('turn processed, freeSwitch:', this.state.freeSwitch);
       },
+      handleWait: (data) => {
+        console.log(data, data.player, data.player === 'player1');
+        if (this.state.isPlayer1) {
+          this.setState({ isWaiting: data.player === 'player1' });
+        } else {
+          this.setState({ isWaiting: data.player === 'player2' });
+        }
+      },
       freeSwitch: (data) => {
         // console.log('free switch invoked');
-        if (this.state.player1) {
+        if (this.state.isPlayer1) {
           this.setState({
             freeSwitch: true,
             pokemon: data.player1.pokemon,
@@ -139,26 +149,12 @@ export default class Game extends Component {
         }
       },
       turnMove: (data) => {
-        if (this.state.player1) {
-          // this.setState(prevState => (
-          //   {
-          //     pokemon: data.player1.pokemon,
-          //     opponent: data.player2,
-          //     isActive: !prevState.isActive,
-          //   }
-          // ));
+        if (this.state.isPlayer1) {
           this.setState({
             pokemon: data.player1.pokemon,
             opponent: data.player2,
           });
         } else {
-          // this.setState(prevState => (
-          //   {
-          //     pokemon: data.player2.pokemon,
-          //     opponent: data.player1,
-          //     isActive: !prevState.isActive,
-          //   }
-          // ));
           this.setState({
             pokemon: data.player2.pokemon,
             opponent: data.player1,
@@ -169,7 +165,7 @@ export default class Game extends Component {
         this.setState({
           winner: data.name,
           gameOver: true,
-          isActive: false,
+          // isActive: false,
         });
         setTimeout(() => this.props.history.replace('/'), 20000);
       },
@@ -308,7 +304,7 @@ export default class Game extends Component {
     } else if (value.split(' ')[0] === 'choose') {
       this.commandHandlers().choose(value.split(' ')[1]);
     } else {
-      this.setState({gameMessage: 'invalid input!'});
+      this.setState({ gameMessage: 'invalid input!' });
       // alert('invalid input!');
     }
 
@@ -397,7 +393,7 @@ export default class Game extends Component {
       <div className={css.stateContainer}>
         <Logo
           name={this.state.name}
-          isActive={this.state.isActive}
+          isWaiting={this.state.isWaiting}
           opponent={this.state.opponent}
           message={this.state.gameMessage}
         />
@@ -484,10 +480,13 @@ export default class Game extends Component {
             handleCommands={this.handleCommands}
             handleInputChange={this.handleInputChange}
           />
-          {this.state.pokemon[0].moves.map(move => {
-            return <button className={css.gameButton} onClick={() => {this.handleAttackClick(move.name)}}> {move.name} </button>
-          })}
-          
+          {this.state.pokemon[0].moves.map(move => (
+            <button
+              className={css.gameButton}
+              onClick={() => { this.handleAttackClick(move.name); }}
+            >{move.name}
+            </button>
+          ))}
         </div>
         {this.renderSideBar()}
       </div>

@@ -158,6 +158,12 @@ io.on('connection', (socket) => {
       resolveTurn(game, game.p1Move, game.p1MoveIdx, game.p2Move, game.p2MoveIdx, io, data.gameid);
       game.p1Move = '';
       game.p2Move = '';
+    } else if (game.p1Move) {
+      io.to(data.gameid).emit('waiting', { player: game.player1.player });
+    } else if (game.p2Move) {
+      io.to(data.gameid).emit('waiting', { player: game.player2.player });
+    } else {
+      console.error('Resolving turn with no moves selected');
     }
   });
 
@@ -208,6 +214,12 @@ io.on('connection', (socket) => {
       resolveTurn(game, game.p1Move, game.p1MoveIdx, game.p2Move, game.p2MoveIdx, io, data.gameid);
       game.p1Move = '';
       game.p2Move = '';
+    } else if (game.p1Move) {
+      io.to(data.gameid).emit('waiting', { player: game.player1.player });
+    } else if (game.p2Move) {
+      io.to(data.gameid).emit('waiting', { player: game.player2.player });
+    } else {
+      console.error('Resolving turn with no moves selected');
     }
   });
 });
