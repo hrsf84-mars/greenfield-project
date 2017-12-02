@@ -93,7 +93,13 @@ export default class Game extends Component {
         ));
       },
       playerInitialized: (data) => {
+<<<<<<< HEAD
         console.log(data.pokemon);
+||||||| merged common ancestors
+        console.log(data);
+=======
+        // console.log(data);
+>>>>>>> Game logic bug fix
         this.setState({
           [data.player]: true,
           pokemonOptions: data.pokemon,
@@ -120,8 +126,10 @@ export default class Game extends Component {
             freeSwitch: false,
           }
         ));
+        console.log('turn processed, freeSwitch:', this.state.freeSwitch);
       },
       freeSwitch: (data) => {
+        console.log('free switch invoked');
         if (this.state.player1) {
           this.setState({
             freeSwitch: true,
@@ -229,7 +237,15 @@ export default class Game extends Component {
             ({ health } = poke);
           }
         });
-        if (isAvailable && health > 0) {
+        if (health <= 0) {
+          this.setState({ gameMessage: 'That pokemon has fainted!' });
+        } else if (this.state.freeSwitch && this.state.pokemon[0].health > 0) {
+          console.log('free switch block');
+          this.setState({ gameMessage: 'you must wait for your opponent to pick a new pokemon' });
+        } else if (!isAvailable) {
+          this.setState({ gameMessage: 'You do not have that pokemon!' });
+        } else {
+          console.log('free switch', this.state.freeSwitch);
           this.state.socket.emit('switch', {
             gameid: this.props.match.params.gameid,
             name: this.state.name,
@@ -237,14 +253,25 @@ export default class Game extends Component {
             index,
             free: this.state.freeSwitch,
           });
-          // this.setState({ freeSwitch: false });
-        } else if (health === 0) {
-          this.setState({gameMessage: 'That pokemon has fainted!'});
-          // alert('That pokemon has fainted!');
-        } else {
-          this.setState({gameMessage: 'You do not have that pokemon!'});
-          // alert('You do not have that pokemon!');
         }
+
+        // if (isAvailable && health > 0) {
+        //   console.log('free switch', this.state.freeSwitch);
+        //   this.state.socket.emit('switch', {
+        //     gameid: this.props.match.params.gameid,
+        //     name: this.state.name,
+        //     pokemon: this.state.pokemon,
+        //     index,
+        //     free: this.state.freeSwitch,
+        //   });
+        //   // this.setState({ freeSwitch: false });
+        // } else if (health === 0) {
+        //   this.setState({gameMessage: 'That pokemon has fainted!'});
+        //   // alert('That pokemon has fainted!');
+        // } else {
+        //   this.setState({gameMessage: 'You do not have that pokemon!'});
+        //   // alert('You do not have that pokemon!');
+        // }
       },
     };
   }

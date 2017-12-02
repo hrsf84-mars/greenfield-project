@@ -2,7 +2,8 @@ const { damageCalculation } = require('../../game-logic');
 const { createTurnlog } = require('./creators');
 
 const processSwitches = (game, player, moveIdx, io, gameid) => {
-  player.pokemon.unshift(game.player1.pokemon.splice(moveIdx, 1)[0]);
+  console.log('process switch on server');
+  player.pokemon.unshift(player.pokemon.splice(moveIdx, 1)[0]);
   const turnlog = createTurnlog(player, null, null, 'switch');
   io.to(gameid).emit('attack processed', {
     basicAttackDialog: turnlog,
@@ -19,7 +20,7 @@ const processAttacks = (game, attacker, defender, moveIdx, io, gameid) => {
     type: attacker.pokemon[0].types[0],
     isZ: false,
   };
-  console.log(attackingMove);
+  // console.log(attackingMove);
   const turnResults = damageCalculation(attacker, defender, attackingMove);
   const targetPokemon = defender.pokemon[0];
   targetPokemon.health -= turnResults.damageToBeDone;
@@ -34,9 +35,9 @@ exports.resolveTurn = (game, p1Move, p1MoveIdx, p2Move, p2MoveIdx, io, gameid) =
   console.log('resolving turn');
   const p1 = game.player1;
   const p2 = game.player2;
-  const p1Pokemon = p1.pokemon[0];
-  const p2Pokemon = p2.pokemon[0];
-  const isP1Faster = p1Pokemon.speed >= p2Pokemon.speed;
+  // const p1Pokemon = p1.pokemon[0];
+  // const p2Pokemon = p2.pokemon[0];
+  const isP1Faster = p1.pokemon[0].speed >= p2.pokemon[0].speed;
   // console.log(p1Pokemon, p2Pokemon, isP1Faster);
   const fast = {
     // player: p1,
@@ -68,6 +69,8 @@ exports.resolveTurn = (game, p1Move, p1MoveIdx, p2Move, p2MoveIdx, io, gameid) =
   }
 
   // handle KO
+  const p1Pokemon = p1.pokemon[0];
+  const p2Pokemon = p2.pokemon[0];
   if (p1Pokemon.health <= 0) {
     p1Pokemon.health = 0;
     if (p1.pokemon[1].health <= 0 && p1.pokemon[2].health <= 0) {
@@ -84,6 +87,7 @@ exports.resolveTurn = (game, p1Move, p1MoveIdx, p2Move, p2MoveIdx, io, gameid) =
     }
   } else {
     console.log('next turn');
+    console.log(game);
     io.to(gameid).emit('turn move', game);
   }
 };
