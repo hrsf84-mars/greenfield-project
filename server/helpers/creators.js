@@ -119,6 +119,7 @@ const createPlayer = (player, number) => (
           player: number,
           name: player.name,
           pokemon,
+          ready: false,
         });
       })
       .catch(err => reject(err));
