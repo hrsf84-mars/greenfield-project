@@ -113,13 +113,13 @@ const createPlayer = (player, number) => (
     createPokemonArr()
       .then((pokes) => {
         // console.log('pokes length', pokes.length);
-        let pokeArr = [];
+        let pokemon = [];
         for (let i = 0; i < 9; i += 3) {
-          pokeArr.push(pokes.slice(i, (i + 3)));
+          pokemon.push(pokes.slice(i, (i + 3)));
         }
         // console.log(pokeArr);
         // console.log('full arr', pokes[0]);
-        const [pokemon] = pokeArr;
+        // const [pokemon] = pokeArr;
         // console.log('destructured', pokemon);
         // console.log(pokemon[0].length);
         resolve({
