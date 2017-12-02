@@ -2,7 +2,7 @@ const { damageCalculation } = require('../../game-logic');
 const { createTurnlog } = require('./creators');
 
 const processSwitches = (game, player, moveIdx, io, gameid) => {
-  console.log('process switch on server');
+  // console.log('process switch on server');
   player.pokemon.unshift(player.pokemon.splice(moveIdx, 1)[0]);
   const turnlog = createTurnlog(player, null, null, 'switch');
   io.to(gameid).emit('attack processed', {
