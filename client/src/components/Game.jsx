@@ -387,11 +387,12 @@ export default class Game extends Component {
     return (
       this.state.activeChoice.moves.map((move) => {
         return (
-          <li key={move.name} className={css.moveItem}>
-            <div>
-              {move.name}
-            </div>
-          </li>
+          <tr key={move.name} className={css.moveItem}>
+            <td>x</td>
+            <td>{move.name}</td>
+            <td>{move.power}</td>
+            <td>{move.type}</td>
+          </tr>
         );
       })
     );

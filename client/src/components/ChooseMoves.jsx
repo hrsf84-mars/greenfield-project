@@ -9,9 +9,15 @@ const ChooseMoves = (props) => {
         <h3 style={{textAlign: 'center'}}>Choose four moves</h3>
       </div>
       <div className={css.moveList}>
-        <ul>
-          {props.renderMoveOptions()}
-        </ul>
+        <table>
+          <tbody>
+            <th>Select</th>
+            <th>Move Name</th>
+            <th>Power</th>
+            <th>Type</th>
+            {props.renderMoveOptions()}
+          </tbody>
+        </table>
       </div>
     </div>
   );
