@@ -388,7 +388,7 @@ export default class Game extends Component {
       this.state.activeChoice.moveSet.map((move) => {
         return (
           <tr key={move.name} className={css.moveItem}>
-            <td>x</td>
+            <td><input type="checkbox" /></td>
             <td>{move.name}</td>
             <td>{move.power}</td>
             <td>{move.type}</td>
