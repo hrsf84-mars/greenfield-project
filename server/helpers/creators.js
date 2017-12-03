@@ -85,7 +85,7 @@ const createPokemon = (pokemon) => {
     sprites: { front_default: frontSprite, back_default: backSprite },
     types,
     moveSet: detailedMoveSet,
-    moves,
+    moves: [],
   };
 };
 

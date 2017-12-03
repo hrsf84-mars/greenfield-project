@@ -11,10 +11,12 @@ const ChooseMoves = (props) => {
       <div className={css.moveList}>
         <table>
           <tbody>
-            <th>Select</th>
-            <th>Move Name</th>
-            <th>Power</th>
-            <th>Type</th>
+            <tr>
+              <th>Select</th>
+              <th>Move Name</th>
+              <th>Power</th>
+              <th>Type</th>
+            </tr>
             {props.renderMoveOptions()}
           </tbody>
         </table>

@@ -9,6 +9,7 @@ import GameState from './GameState';
 import Logo from './Logo';
 import Team from './Team';
 import ChooseMoves from './ChooseMoves';
+import MoveItem from './MoveItem';
 import css from '../styles.css';
 
 import help from './../../../utils/helpers';
@@ -342,9 +343,20 @@ export default class Game extends Component {
     }
   }
 
-  handleMoveSelect(move) {
-    let movesObj = this.state.activeChoice.moves;
+  handleMoveSelect(ac, move, checked) {
+    // const movesArr = this.state.activeChoice.moves;
+    // if (movesArr.length < 4) {
+    //   // check to see if checkbox is being checked or unchecked
+    //   if (!checked) {
+    //     // if it's being checked, add move to the array
+    //     movesArr.push(move);
+    //   } else {
+    //     // if it's being unchecked, remove it from the array
+    //     movesArr.filter(existingMove => existingMove.name !== move.name);
+    //   }
+    // }
 
+    this.setState({ activeChoice: ac });
   }
 
   renderGame() {
@@ -393,17 +405,7 @@ export default class Game extends Component {
     return (
       this.state.activeChoice.moveSet.map((move) => {
         return (
-          <tr key={move.name} className={css.moveItem}>
-            <td>
-              <input
-                type="checkbox"
-                onChange={() => { this.handleMoveSelect(move); }}
-              />
-            </td>
-            <td>{move.name}</td>
-            <td>{move.power}</td>
-            <td>{move.type}</td>
-          </tr>
+          <MoveItem key={move.name} handleMoveSelect={this.handleMoveSelect} activeChoice={this.state.activeChoice} move={move} />
         );
       })
     );
