@@ -329,16 +329,28 @@ export default class Game extends Component {
   }
 
   handleAddPokemon() {
+    const setPokemonState = () => {
+      const teamArr = this.state.pokemon;
+      teamArr.push(this.state.activeChoice);
+      const newCount = this.state.teamCount + 1;
+      this.setState({
+        pokemon: teamArr,
+        teamCount: newCount,
+        activeChoice: null,
+      });
+    };
     if (this.state.activeChoice) {
-      if (this.state.teamCount < 3 && this.state.activeChoice.moves.length === 4) {
-        const teamArr = this.state.pokemon;
-        teamArr.push(this.state.activeChoice);
-        const newCount = this.state.teamCount + 1;
-        this.setState({
-          pokemon: teamArr,
-          teamCount: newCount,
-          activeChoice: null,
-        });
+      if (this.state.teamCount < 3) {
+        // if there are more than four moves available to choose from
+        if (this.state.activeChoice.moveSet.length >= 4) {
+          // then check that a user chooses four moves
+          if (this.state.activeChoice.moves.length === 4) {
+            // if they do, set state
+            setPokemonState();
+          }
+        } else {
+          setPokemonState();
+        }
       }
     }
   }
