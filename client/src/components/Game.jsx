@@ -341,9 +341,7 @@ export default class Game extends Component {
     };
     if (this.state.activeChoice) {
       if (this.state.teamCount < 3) {
-        // if there are more than four moves available to choose from
         if (this.state.activeChoice.moveSet.length >= 4) {
-          // then check that a user chooses four moves
           if (this.state.activeChoice.moves.length === 4) {
             // if they do, set state
             setPokemonState();
@@ -367,7 +365,6 @@ export default class Game extends Component {
     //     movesArr.filter(existingMove => existingMove.name !== move.name);
     //   }
     // }
-
     this.setState({ activeChoice: ac });
   }
 
@@ -417,7 +414,13 @@ export default class Game extends Component {
     return (
       this.state.activeChoice.moveSet.map((move) => {
         return (
-          <MoveItem key={move.name} handleMoveSelect={this.handleMoveSelect} activeChoice={this.state.activeChoice} move={move} />
+          <MoveItem
+            key={move.name}
+            handleMoveSelect={this.handleMoveSelect}
+            activeChoice={this.state.activeChoice}
+            move={move}
+            checkedBoxes={this.state.activeChoice.moves.length}
+          />
         );
       })
     );
