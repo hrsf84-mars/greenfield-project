@@ -330,7 +330,7 @@ export default class Game extends Component {
 
   handleAddPokemon() {
     if (this.state.activeChoice) {
-      if (this.state.teamCount < 3) {
+      if (this.state.teamCount < 3 && this.state.activeChoice.moves.length === 4) {
         const teamArr = this.state.pokemon;
         teamArr.push(this.state.activeChoice);
         const newCount = this.state.teamCount + 1;
