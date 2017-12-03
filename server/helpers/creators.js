@@ -26,18 +26,12 @@ const createMoveMap = () => {
     });
   });
 
-  // console.log('MOVELIST LENGTH: ', allMoves.length);
   return moveMap;
 };
 
 const moveMap = createMoveMap();
 
 const createPokemon = (pokemon) => {
-  // console.log(pokemon.types);
-  // console.log(pokemon.name);
-  // console.log(pokemon.frontSprite, pokemon.backSprite);
-  // console.log(pokemon.baseSpecialAttack, pokemon.baseSpecialDefense, pokemon.baseSpeed);
-  // console.log(pokemon.moveSet);
   const {
     name,
     baseHealth,
@@ -118,7 +112,6 @@ const createPlayer = (player, number) => (
   new Promise((resolve, reject) => {
     createPokemonArr()
       .then((pokes) => {
-        // console.log('pokes length', pokes.length);
         const pokemon = [];
         for (let i = 0; i < 9; i += 3) {
           pokemon.push(pokes.slice(i, (i + 3)));

@@ -12,15 +12,13 @@ export default class MoveItem extends Component {
 
   handleCheckBoxChange() {
     const { moves } = this.props.activeChoice;
-    if (moves.length < 4) {
-      if (!this.state.isChecked) {
-        moves.push(this.props.move);
-      } else {
-        this.props.activeChoice.moves = moves.filter(existingMove => existingMove.name !== this.props.move.name);
-        // ********* NOTE: this does not trigger a rerendering of the Game component.
-        // ********* I think this must be fixed to allow user to uncheck checkboxes when they have four moves
-      }
-    this.props.handleMoveSelect(this.props.activeChoice);
+    if (this.state.isChecked) {
+      this.props.activeChoice.moves =
+        moves.filter(existingMove => existingMove.name !== this.props.move.name);
+      this.props.handleMoveSelect(this.props.activeChoice);
+    } else if (moves.length < 4) {
+      moves.push(this.props.move);
+      this.props.handleMoveSelect(this.props.activeChoice);
     }
     this.setState({ isChecked: !this.state.isChecked });
   }

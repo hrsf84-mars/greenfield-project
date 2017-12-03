@@ -85,7 +85,7 @@ exports.resolveTurn = (game, p1Move, p1MoveIdx, p2Move, p2MoveIdx, io, gameid) =
     }
   } else {
     console.log('next turn');
-    console.log(game);
+    // console.log(game);
     io.to(gameid).emit('turn move', game);
   }
 };
