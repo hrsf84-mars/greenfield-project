@@ -52,6 +52,7 @@ export default class Game extends Component {
     this.renderBattle = this.renderBattle.bind(this);
     this.renderOptions = this.renderOptions.bind(this);
     this.renderMoveOptions = this.renderMoveOptions.bind(this);
+    this.handleMoveSelect = this.handleMoveSelect.bind(this);
   }
 
   componentDidMount() {
@@ -341,6 +342,11 @@ export default class Game extends Component {
     }
   }
 
+  handleMoveSelect(move) {
+    let movesObj = this.state.activeChoice.moves;
+
+  }
+
   renderGame() {
     const {
       pokemon, opponent, winner, name, attacking,
@@ -388,7 +394,12 @@ export default class Game extends Component {
       this.state.activeChoice.moveSet.map((move) => {
         return (
           <tr key={move.name} className={css.moveItem}>
-            <td><input type="checkbox" /></td>
+            <td>
+              <input
+                type="checkbox"
+                onChange={() => { this.handleMoveSelect(move); }}
+              />
+            </td>
             <td>{move.name}</td>
             <td>{move.power}</td>
             <td>{move.type}</td>
