@@ -26,7 +26,6 @@ export default class Game extends Component {
       name: null,
       pokemon: [],
       opponent: null,
-      // isActive: null,
       attacking: false,
       gameOver: false,
       winner: null,

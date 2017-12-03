@@ -242,7 +242,6 @@ app.post('/login', async (req, resp) => {
 });
 
 app.post('/signup', (req, resp) => {
-  console.log('post request on /signup');
   const { username, password, email } = req.body;
   bcrypt.hash(password, saltRounds)
     .then(hash => db.saveUser(username, hash, email))
@@ -250,7 +249,6 @@ app.post('/signup', (req, resp) => {
       if (newuser.dataValues) {
         req.login({ user_id: newuser.id }, (err) => {
           if (err) throw err;
-          console.log('NEW USER ID:', newuser.id);
           req.session.username = username;
           req.session.loggedIn = true;
           const currSession = JSON.stringify(req.session);
